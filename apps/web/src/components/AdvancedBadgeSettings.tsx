@@ -82,8 +82,13 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             </span>
           </Label>
           <ToggleGroup
+            // type="single"
             value={[currentSize]}
-            onValueChange={(value) => value && handleSizePreset(value[0] as unknown as BadgeSize)}
+            // ToggleGroup's onValueChange gives back the selected string or empty string
+            onValueChange={(value) => {
+              if (!value) return;
+              handleSizePreset(value[0] as unknown as BadgeSize);
+            }}
             className="justify-start"
           >
             {(Object.keys(BADGE_SIZE_PRESETS) as BadgeSize[]).map((size) => (
@@ -108,7 +113,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           </Label>
           <Slider
             value={[advanced.opacity ?? 1]}
-            onValueChange={(value) => updateField('opacity', value as number)}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('opacity', value ?? 1);
+            }}
             min={0.1}
             max={1}
             step={0.05}
@@ -126,7 +134,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           </Label>
           <Slider
             value={[advanced.txtsize ?? 1]}
-            onValueChange={(value) => updateField('txtsize', value as number)}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('txtsize', value ?? 1);
+            }}
             min={0.5}
             max={2}
             step={0.1}
@@ -146,7 +157,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           <div className="flex gap-2">
             <Slider
               value={[advanced.border ?? 0]}
-              onValueChange={(value) => updateField('border', value as number)}
+              onValueChange={(val) => {
+                const value = Array.isArray(val) ? val[0] : val;
+                updateField('border', value ?? 0);
+              }}
               min={0}
               max={5}
               step={1}
@@ -171,7 +185,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           </Label>
           <Slider
             value={[advanced.rotate ?? 0]}
-            onValueChange={(value) => updateField('rotate', value as number)}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('rotate', value ?? 0);
+            }}
             min={-45}
             max={45}
             step={1}
@@ -189,7 +206,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           </Label>
           <Slider
             value={[typeof advanced.shadow === 'number' ? advanced.shadow : 0]}
-            onValueChange={(value) => updateField('shadow', value as number)}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('shadow', value ?? 0);
+            }}
             min={0}
             max={20}
             step={1}
@@ -208,7 +228,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             </Label>
             <Slider
               value={[advanced.shadowAngle ?? 135]}
-              onValueChange={(value) => updateField('shadowAngle', value as number)}
+              onValueChange={(val) => {
+                const value = Array.isArray(val) ? val[0] : val;
+                updateField('shadowAngle', value ?? 135);
+              }}
               min={0}
               max={360}
               step={15}
@@ -227,7 +250,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           </Label>
           <Slider
             value={[typeof advanced.glow === 'number' ? advanced.glow : 0]}
-            onValueChange={(value) => updateField('glow', value as number)}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('glow', value ?? 0);
+            }}
             min={0}
             max={30}
             step={1}

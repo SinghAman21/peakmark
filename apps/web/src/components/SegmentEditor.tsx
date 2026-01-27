@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, Reorder, useDragControls } from 'framer-motion';
 import { Plus, Trash2, GripVertical, Check } from 'lucide-react';
-import { BadgeSegment, BADGE_COLORS } from '@/types/badge';
+import type { BadgeSegment } from '@/types/badge';
+import { BADGE_COLORS } from '@/types/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -183,9 +184,10 @@ const SegmentItem = ({
                   max={30}
                   step={1}
                   value={[segment.padding?.left ?? 5]}
-                  onValueChange={([val]) => {
+                  onValueChange={(val) => {
+                    const v = Array.isArray(val) ? val[0] : val;
                     onUpdate(index, { 
-                      padding: { left: val, right: val } 
+                      padding: { left: v ?? 5, right: v ?? 5 } 
                     });
                   }}
                   className="flex-1"
