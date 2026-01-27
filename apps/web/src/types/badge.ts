@@ -6,6 +6,11 @@ export interface SegmentPadding {
 }
 
 export interface BadgeSegment {
+  /**
+   * Stable identifier used by the editor UI (drag/reorder, expand/collapse).
+   * Optional to keep backwards compatibility with existing serialized segments.
+   */
+  id?: string;
   text: string;
   color: string;
   padding?: SegmentPadding; // Padding in pixels for each direction

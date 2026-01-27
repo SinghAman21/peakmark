@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, Reorder, useDragControls } from 'framer-motion';
+import { useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, Reorder, useDragControls } from 'framer-motion';
 import { Plus, Trash2, GripVertical, Check } from 'lucide-react';
 import type { BadgeSegment } from '@/types/badge';
 import { BADGE_COLORS } from '@/types/badge';
@@ -21,6 +21,8 @@ interface SegmentEditorProps {
 
 const colorOptions = Object.entries(BADGE_COLORS);
 
+const createSegmentId = () => `seg-${Math.random().toString(36).slice(2, 10)}-${Date.now().toString(36)}`;
+
 // Individual draggable segment item
 const SegmentItem = ({
   segment,
@@ -28,7 +30,7 @@ const SegmentItem = ({
   iconPosition,
   hasIcon,
   canDelete,
-  expandedSegment,
+  expandedSegmentId,
   onToggleExpand,
   onToggleIcon,
   onRemove,
@@ -39,29 +41,21 @@ const SegmentItem = ({
   iconPosition: number;
   hasIcon: boolean;
   canDelete: boolean;
-  expandedSegment: number | null;
-  onToggleExpand: (index: number) => void;
+  expandedSegmentId: string | null;
+  onToggleExpand: (id: string) => void;
   onToggleIcon: (index: number) => void;
   onRemove: (index: number) => void;
   onUpdate: (index: number, updates: Partial<BadgeSegment>) => void;
 }) => {
   const dragControls = useDragControls();
-  const isExpanded = expandedSegment === index;
-  const wasExpandedRef = useRef(false);
-  
-  useEffect(() => {
-    wasExpandedRef.current = isExpanded;
-  }, [isExpanded]);
+  const isExpanded = expandedSegmentId === segment.id;
 
   return (
     <Reorder.Item
-      value={segment}
+      value={segment.id!}
       dragListener={false}
       dragControls={dragControls}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.15 }}
+      layout="position"
       whileDrag={{ scale: 1.02, boxShadow: '0 8px 20px rgba(0,0,0,0.3)' }}
       className="bg-secondary/30 rounded-lg border border-border/50 overflow-hidden select-none"
     >
@@ -82,13 +76,13 @@ const SegmentItem = ({
         <div
           className="w-6 h-6 rounded border border-border shrink-0 cursor-pointer"
           style={{ backgroundColor: segment.color }}
-          onClick={() => onToggleExpand(index)}
+          onClick={() => onToggleExpand(segment.id!)}
         />
         
         {/* Text preview */}
         <span 
           className="font-mono text-sm flex-1 truncate cursor-pointer"
-          onClick={() => onToggleExpand(index)}
+          onClick={() => onToggleExpand(segment.id!)}
         >
           {segment.text || '(empty)'}
         </span>
@@ -123,15 +117,18 @@ const SegmentItem = ({
       </div>
 
       {/* Expanded Content */}
-      {isExpanded && (
-        <motion.div
-          initial={wasExpandedRef.current ? false : { height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          style={{ overflow: 'hidden' }}
-          className="border-t border-border/50"
-        >
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            key="expanded"
+            layout
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            style={{ overflow: 'hidden' }}
+            className="border-t border-border/50"
+          >
           <div className="p-3 space-y-3">
             {/* Text input */}
             <div className="space-y-1">
@@ -198,8 +195,9 @@ const SegmentItem = ({
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Reorder.Item>
   );
 };
@@ -212,21 +210,49 @@ export const SegmentEditor = ({
   onIconPositionChange,
   maxSegments = 4,
 }: SegmentEditorProps) => {
-  const [expandedSegment, setExpandedSegment] = useState<number | null>(null);
+  const [expandedSegmentId, setExpandedSegmentId] = useState<string | null>(null);
+
+  // Ensure every segment has a stable id for drag/reorder + expand/collapse.
+  // We also preserve ids across edits by always carrying forward `id` in updates.
+  const normalizedSegments = useMemo(() => {
+    let changed = false;
+    const next = segments.map((s) => {
+      if (s.id) return s;
+      changed = true;
+      return { ...s, id: createSegmentId() };
+    });
+    if (changed) onSegmentsChange(next);
+    return next;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [segments]);
+
+  const segmentById = useMemo(() => {
+    const m = new Map<string, BadgeSegment>();
+    for (const s of normalizedSegments) m.set(s.id!, s);
+    return m;
+  }, [normalizedSegments]);
+
+  const orderIds = useMemo(() => normalizedSegments.map((s) => s.id!), [normalizedSegments]);
 
   const addSegment = () => {
     if (segments.length >= maxSegments) return;
     const newSegment: BadgeSegment = {
+      id: createSegmentId(),
       text: 'new',
       color: BADGE_COLORS.grey,
     };
-    onSegmentsChange([...segments, newSegment]);
+    onSegmentsChange([...normalizedSegments, newSegment]);
   };
 
   const removeSegment = (index: number) => {
-    if (segments.length <= 1) return;
-    const newSegments = segments.filter((_, i) => i !== index);
+    if (normalizedSegments.length <= 1) return;
+    const removedId = normalizedSegments[index]?.id;
+    const newSegments = normalizedSegments.filter((_, i) => i !== index);
     onSegmentsChange(newSegments);
+
+    if (removedId && expandedSegmentId === removedId) {
+      setExpandedSegmentId(null);
+    }
     
     // Adjust icon position if needed
     if (iconPosition >= newSegments.length) {
@@ -237,8 +263,8 @@ export const SegmentEditor = ({
   };
 
   const updateSegment = (index: number, updates: Partial<BadgeSegment>) => {
-    const newSegments = segments.map((seg, i) => 
-      i === index ? { ...seg, ...updates } : seg
+    const newSegments = normalizedSegments.map((seg, i) => 
+      i === index ? { ...seg, ...updates, id: seg.id } : seg
     );
     onSegmentsChange(newSegments);
   };
@@ -247,14 +273,16 @@ export const SegmentEditor = ({
     onIconPositionChange(iconPosition === index ? -1 : index);
   };
 
-  const handleReorder = (newOrder: BadgeSegment[]) => {
-    // Find where the icon-attached segment moved to
-    const oldIconSegment = segments[iconPosition];
-    const newIconIndex = newOrder.findIndex(s => s === oldIconSegment);
-    
-    onSegmentsChange(newOrder);
-    if (newIconIndex !== -1 && newIconIndex !== iconPosition) {
-      onIconPositionChange(newIconIndex);
+  const handleReorder = (newOrderIds: string[]) => {
+    const iconSegmentId = normalizedSegments[iconPosition]?.id;
+    const newSegments = newOrderIds.map((id) => segmentById.get(id)!).filter(Boolean);
+    onSegmentsChange(newSegments);
+
+    if (iconSegmentId) {
+      const newIconIndex = newSegments.findIndex((s) => s.id === iconSegmentId);
+      if (newIconIndex !== -1 && newIconIndex !== iconPosition) {
+        onIconPositionChange(newIconIndex);
+      }
     }
   };
 
@@ -276,21 +304,21 @@ export const SegmentEditor = ({
 
       <Reorder.Group
         axis="y"
-        values={segments}
+        values={orderIds}
         onReorder={handleReorder}
         className="space-y-2"
-        layoutScroll
+        layout
       >
-        {segments.map((segment, index) => (
+        {normalizedSegments.map((segment, index) => (
           <SegmentItem
-            key={index}
+            key={segment.id}
             segment={segment}
             index={index}
             iconPosition={iconPosition}
             hasIcon={hasIcon}
-            canDelete={segments.length > 1}
-            expandedSegment={expandedSegment}
-            onToggleExpand={(i) => setExpandedSegment(expandedSegment === i ? null : i)}
+            canDelete={normalizedSegments.length > 1}
+            expandedSegmentId={expandedSegmentId}
+            onToggleExpand={(id) => setExpandedSegmentId(expandedSegmentId === id ? null : id)}
             onToggleIcon={toggleIconPosition}
             onRemove={removeSegment}
             onUpdate={updateSegment}
