@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, Reorder, useDragControls } from 'framer-motion';
 import { Plus, Trash2, GripVertical, Check } from 'lucide-react';
 import type { BadgeSegment } from '@/types/badge';
@@ -215,16 +215,22 @@ export const SegmentEditor = ({
   // Ensure every segment has a stable id for drag/reorder + expand/collapse.
   // We also preserve ids across edits by always carrying forward `id` in updates.
   const normalizedSegments = useMemo(() => {
-    let changed = false;
-    const next = segments.map((s) => {
+    return segments.map((s) => {
       if (s.id) return s;
-      changed = true;
       return { ...s, id: createSegmentId() };
     });
-    if (changed) onSegmentsChange(next);
-    return next;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segments]);
+
+  // Update parent when segments need IDs added (useEffect to avoid setState during render)
+  useEffect(() => {
+    const needsIds = segments.some((s) => !s.id);
+    if (needsIds) {
+      const withIds = segments.map((s) => 
+        s.id ? s : { ...s, id: createSegmentId() }
+      );
+      onSegmentsChange(withIds);
+    }
+  }, [segments, onSegmentsChange]);
 
   const segmentById = useMemo(() => {
     const m = new Map<string, BadgeSegment>();

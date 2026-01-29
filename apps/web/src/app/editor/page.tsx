@@ -264,7 +264,7 @@ export default function EditorPage() {
             <div className="space-y-6">
               {/* Icon Picker */}
               <Collapsible open={iconPickerOpen} onOpenChange={setIconPickerOpen}>
-                <CollapsibleTrigger >
+                <CollapsibleTrigger>
                   <Button
                     variant="outline"
                     className="w-full justify-between font-mono text-sm"
