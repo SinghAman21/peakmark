@@ -3,7 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { X, Copy, Check, Link, Download, Image } from 'lucide-react';
-import { Badge, BadgeSegment, getBadgeSegments, BadgeAdvancedOptions } from '@/types/badge';
+import type { Badge, BadgeSegment } from '@/types/badge';
+import type { BadgeAdvancedOptions } from '@/types/badge';
+import { getBadgeSegments } from '@/types/badge';
 import { BadgeSVG, generateBadgeSVGString } from './BadgeSVG';
 import { IconPicker } from './IconPicker';
 import { SegmentEditor } from './SegmentEditor';
@@ -337,7 +339,7 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
               <div className="space-y-6">
                 {/* Icon Picker */}
                 <Collapsible open={iconPickerOpen} onOpenChange={setIconPickerOpen}>
-                  <CollapsibleTrigger asChild>
+                  <CollapsibleTrigger>
                     <Button
                       variant="outline"
                       className="w-full justify-between font-mono text-sm"
@@ -386,7 +388,7 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
                   <Label className="font-mono text-sm">Badge Style</Label>
                   <Select
                     value={editedBadge.style}
-                    onValueChange={(value: Badge['style']) => setEditedBadge(applyStylePreset(editedBadge, value))}
+                    onValueChange={(value: Badge['style'] | null) => setEditedBadge(applyStylePreset(editedBadge, value ?? 'flat'))}
                   >
                     <SelectTrigger className="font-mono bg-secondary/50 border-border">
                       <SelectValue />

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Badge } from '@/types/badge';
+import type { Badge } from '@/types/badge';
 import { BadgeCard } from './BadgeCard';
 import { seedBadges } from '@/data/seedBadges';
 

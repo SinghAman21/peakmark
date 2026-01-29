@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Pencil, Code, FileCode, FileText } from 'lucide-react';
-import { Badge } from '@/types/badge';
+import type { Badge } from '@/types/badge';
 import { BadgeSVG, generateBadgeSVGString } from './BadgeSVG';
 import { toast } from '@/hooks/use-toast';
 

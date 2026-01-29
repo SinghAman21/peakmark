@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { Badge, getBadgeSegments, BadgeSegment, BADGE_SIZE_PRESETS } from '@/types/badge';
+import type { Badge, BadgeSegment } from '@/types/badge';
+import { getBadgeSegments, BADGE_SIZE_PRESETS } from '@/types/badge';
 import { SIMPLE_ICON_PATHS, LUCIDE_ICON_PATHS } from '@/data/badgeIcons';
 
 interface BadgeSVGProps {
@@ -368,7 +369,7 @@ export const generateBadgeSVGString = (badge: Badge): string => {
       case 'plastic': return 4;
       case 'rounded': return 10;
       case 'folded': return 0;
-      default: return 3;
+      default: return 0;
     }
   };
   const radius = getRadius();

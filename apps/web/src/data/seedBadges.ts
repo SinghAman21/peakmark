@@ -1,4 +1,4 @@
-import { Badge } from '@/types/badge';
+import type { Badge } from '@/types/badge';
 
 export const seedBadges: Badge[] = [
   {
