@@ -53,6 +53,8 @@ export default function Home() {
               <p className="text-muted-foreground max-w-lg mx-auto">
                 Hover to copy or remix. Each badge is fully customizable.
               </p>
+              <a href="http://localhost:3000/badge?style=flat&segments=%5B%7B%22text%22%3A%22your+label+som%22%2C%22color%22%3A%22%23555555%22%2C%22id%22%3A%22seg-vwdbt5a0-ml0na6l5%22%7D%2C%7B%22text%22%3A%22your+message%22%2C%22color%22%3A%22%2322d3ee%22%2C%22id%22%3A%22seg-2lrkgkll-ml0na6l5%22%7D%5D" target="_blank" rel="noopener noreferrer">Example Badge</a>
+              {/* http://localhost:3000/badge?style=flat&segments=%5B%7B%22text%22%3A%22your+label+som%22%2C%22color%22%3A%22%23555555%22%2C%22id%22%3A%22seg-vwdbt5a0-ml0na6l5%22%7D%2C%7B%22text%22%3A%22your+message%22%2C%22color%22%3A%22%2322d3ee%22%2C%22id%22%3A%22seg-2lrkgkll-ml0na6l5%22%7D%5D */}
             </div>
             
             <BadgeGallery onRemix={handleRemix} />

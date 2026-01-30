@@ -117,6 +117,9 @@ export default function EditorPage() {
       style: badge.style,
     });
     params.set('segments', JSON.stringify(segments));
+    if (badge.advanced) {
+      params.set('advanced', JSON.stringify(badge.advanced));
+    }
     if (badge.icon) {
       params.set('icon', badge.icon);
       params.set('iconPosition', String(badge.iconPosition ?? 0));

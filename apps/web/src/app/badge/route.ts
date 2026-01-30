@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateBadgeSVGString } from '@/components/BadgeSVG';
-import type { Badge, BadgeSegment, BadgeParams } from '@/types/badge';
+import type { Badge, BadgeSegment, BadgeAdvancedOptions } from '@/types/badge';
 
 function parseBadgeFromParams(params: URLSearchParams): Badge {
   const style = (params.get('style') || 'flat') as Badge['style'];
@@ -33,6 +33,17 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
     ];
   }
 
+  // Parse advanced options (size, scale, opacity, border, shadow, glow, etc.)
+  let advanced: BadgeAdvancedOptions | undefined;
+  const advancedParam = params.get('advanced');
+  if (advancedParam) {
+    try {
+      advanced = JSON.parse(decodeURIComponent(advancedParam)) as BadgeAdvancedOptions;
+    } catch {
+      // ignore malformed advanced param
+    }
+  }
+
   // Build badge object
   const badge: Badge = {
     id: 'api-badge',
@@ -45,6 +56,7 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
     segments,
     icon,
     iconPosition,
+    advanced,
     link: params.get('link') || undefined,
   };
 

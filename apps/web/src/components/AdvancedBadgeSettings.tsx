@@ -170,7 +170,7 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               type="color"
               value={advanced.borderColor ?? '#ffffff'}
               onChange={(e) => updateField('borderColor', e.target.value)}
-              className="w-10 h-8 p-0.5 cursor-pointer border-border"
+              className="w-8 h-8 p-0.5 top-[-1] cursor-pointer border-border"
             />
           </div>
         </div>
@@ -197,7 +197,7 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
         </div>
 
         {/* Shadow Slider */}
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Label className="font-mono text-sm flex items-center justify-between">
             Shadow
             <span className="text-xs text-muted-foreground font-normal">
@@ -215,10 +215,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             step={1}
             className="w-full"
           />
-        </div>
+        </div> */}
 
         {/* Shadow Angle */}
-        {(advanced.shadow ?? 0) > 0 && (
+        {/* {(advanced.shadow ?? 0) > 0 && (
           <div className="space-y-2">
             <Label className="font-mono text-sm flex items-center justify-between">
               Shadow Angle
@@ -238,10 +238,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               className="w-full"
             />
           </div>
-        )}
+        )} */}
 
         {/* Glow Slider */}
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Label className="font-mono text-sm flex items-center justify-between">
             Glow
             <span className="text-xs text-muted-foreground font-normal">
@@ -259,7 +259,7 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             step={1}
             className="w-full"
           />
-        </div>
+        </div> */}
 
         {/* Reset Button */}
         <Button

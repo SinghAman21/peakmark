@@ -137,6 +137,10 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
     
     params.set('segments', JSON.stringify(segments));
     
+    if (b.advanced) {
+      params.set('advanced', JSON.stringify(b.advanced));
+    }
+    
     if (b.icon) {
       params.set('icon', b.icon);
       params.set('iconPosition', String(b.iconPosition ?? 0));
