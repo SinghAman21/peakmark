@@ -112,7 +112,7 @@ export const seedBadges: Badge[] = [
   },
   {
     id: '12',
-    label: 'made with',
+    label: 'made by',
     message: 'Peakmark',
     labelColor: '#0f172a',
     messageColor: '#22d3ee',

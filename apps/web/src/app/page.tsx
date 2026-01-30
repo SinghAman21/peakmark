@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 // import { Header } from '@/components/Header';
 import { HeroSection } from '@/components/HeroSection';
@@ -30,11 +30,9 @@ export default function Home() {
     setTimeout(() => setRemixData(null), 500);
   };
 
-  const handleUpdateBadge = (updated: Badge) => {
-    if (remixData) {
-      setRemixData({ ...remixData, badge: updated });
-    }
-  };
+  const handleUpdateBadge = useCallback((updated: Badge) => {
+    setRemixData((prev) => prev ? { ...prev, badge: updated } : null);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">

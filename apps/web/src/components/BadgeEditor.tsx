@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Copy, Check, Link, Download, Image } from 'lucide-react';
 import type { Badge, BadgeSegment } from '@/types/badge';
 import type { BadgeAdvancedOptions } from '@/types/badge';
@@ -14,7 +14,6 @@ import { BADGE_ICONS, SIMPLE_ICON_PATHS, LUCIDE_ICON_PATHS } from '@/data/badgeI
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from '@/hooks/use-toast';
 import { applyStylePreset } from '@/lib/badgeStylePresets';
 import { BadgeStylePresetPanel } from '@/components/badgeStyles/BadgeStylePresetPanel';
@@ -107,7 +106,8 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
     if (!isOpen) return;
     if (!debouncedBadge) return;
     onUpdate(debouncedBadge);
-  }, [debouncedBadge, isOpen, onUpdate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedBadge, isOpen]);
 
   // Trigger editor phase after floating animation
   useEffect(() => {
@@ -342,41 +342,52 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
 
               <div className="space-y-6">
                 {/* Icon Picker */}
-                <Collapsible open={iconPickerOpen} onOpenChange={setIconPickerOpen}>
-                  <CollapsibleTrigger>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-between font-mono text-sm"
+                <div>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-between font-mono text-sm"
+                    onClick={() => setIconPickerOpen(!iconPickerOpen)}
+                  >
+                    <span className="flex items-center gap-2">
+                      {editedBadge.icon ? (
+                        <>
+                          {renderSelectedIcon(editedBadge.icon)}
+                          <span className="capitalize">{editedBadge.icon}</span>
+                        </>
+                      ) : (
+                        <>
+                          {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                          <Image className="w-4 h-4" />
+                          Add Icon
+                        </>
+                      )}
+                    </span>
+                    <motion.span
+                      animate={{ rotate: iconPickerOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
                     >
-                      <span className="flex items-center gap-2">
-                        {editedBadge.icon ? (
-                          <>
-                            {renderSelectedIcon(editedBadge.icon)}
-                            <span className="capitalize">{editedBadge.icon}</span>
-                          </>
-                        ) : (
-                          <>
-                            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                            <Image className="w-4 h-4" />
-                            Add Icon
-                          </>
-                        )}
-                      </span>
-                      <motion.span
-                        animate={{ rotate: iconPickerOpen ? 180 : 0 }}
+                      ▼
+                    </motion.span>
+                  </Button>
+                  <AnimatePresence>
+                    {iconPickerOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
                       >
-                        ▼
-                      </motion.span>
-                    </Button>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="pt-3">
-                    <IconPicker
-                      selectedIcon={editedBadge.icon}
-                      onSelect={(icon) => updateField('icon', icon)}
-                    />
-                  </CollapsibleContent>
-                </Collapsible>
+                        <div className="pt-3">
+                          <IconPicker
+                            selectedIcon={editedBadge.icon}
+                            onSelect={(icon) => updateField('icon', icon)}
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
                 {/* Segment Editor */}
                 <SegmentEditor

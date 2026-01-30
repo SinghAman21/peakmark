@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Input } from '@/components/ui/input';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { Settings2, RotateCcw } from 'lucide-react';
@@ -55,25 +55,33 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
   const currentSize = advanced.size || 'md';
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger>
-        <Button
-          variant="outline"
-          className="w-full justify-between font-mono text-sm"
+    <div>
+      <Button
+        variant="outline"
+        className="w-full justify-between font-mono text-sm"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className="flex items-center gap-2">
+          <Settings2 className="w-4 h-4" />
+          Advanced Settings
+        </span>
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
         >
-          <span className="flex items-center gap-2">
-            <Settings2 className="w-4 h-4" />
-            Advanced Settings
-          </span>
-          <motion.span
-            animate={{ rotate: isOpen ? 180 : 0 }}
+          ▼
+        </motion.span>
+      </Button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
+            className="overflow-hidden"
           >
-            ▼
-          </motion.span>
-        </Button>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="pt-4 space-y-5">
+            <div className="pt-4 space-y-5">
         {/* Size Presets */}
         <div className="space-y-2">
           <Label className="font-mono text-sm flex items-center justify-between">
@@ -293,7 +301,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
           <RotateCcw className="w-3 h-3 mr-2" />
           Reset to Defaults
         </Button>
-      </CollapsibleContent>
-    </Collapsible>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
