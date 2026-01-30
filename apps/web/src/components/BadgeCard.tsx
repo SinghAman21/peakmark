@@ -162,7 +162,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
                   key={item.type}
                   className={`
                     flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-medium
-                    backdrop-blur-md border transition-colors
+                    backdrop-blur-md border transition-colors cursor-pointer
                     ${copiedType === item.type 
                       ? 'bg-primary/20 border-primary/50 text-primary' 
                       : 'bg-background/80 border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30'

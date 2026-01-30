@@ -1,10 +1,3 @@
-export interface SegmentPadding {
-  top?: number;
-  right?: number;
-  bottom?: number;
-  left?: number;
-}
-
 export interface BadgeSegment {
   /**
    * Stable identifier used by the editor UI (drag/reorder, expand/collapse).
@@ -13,7 +6,7 @@ export interface BadgeSegment {
   id?: string;
   text: string;
   color: string;
-  padding?: SegmentPadding; // Padding in pixels for each direction
+  paddingLeft?: number; // Left padding in pixels
 }
 
 export type BadgeSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -108,11 +101,15 @@ export type BadgeColorKey = keyof typeof BADGE_COLORS;
 // Helper to get segments from a badge (handles legacy label/message format)
 export const getBadgeSegments = (badge: Badge): BadgeSegment[] => {
   if (badge.segments && badge.segments.length > 0) {
-    return badge.segments;
+    // Ensure all segments have paddingLeft set to default if not specified
+    return badge.segments.map(seg => ({
+      ...seg,
+      paddingLeft: seg.paddingLeft ?? 5
+    }));
   }
-  // Fallback to legacy format
+  // Fallback to legacy format with default paddingLeft
   return [
-    { text: badge.label, color: badge.labelColor },
-    { text: badge.message, color: badge.messageColor },
+    { text: badge.label, color: badge.labelColor, paddingLeft: 5 },
+    { text: badge.message, color: badge.messageColor, paddingLeft: 5 },
   ];
 };

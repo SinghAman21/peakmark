@@ -180,17 +180,17 @@ const SegmentItem = ({
                   min={0}
                   max={30}
                   step={1}
-                  value={[segment.padding?.left ?? 5]}
+                  value={[segment.paddingLeft ?? 5]}
                   onValueChange={(val) => {
                     const v = Array.isArray(val) ? val[0] : val;
                     onUpdate(index, { 
-                      padding: { left: v ?? 5, right: v ?? 5 } 
+                      paddingLeft: v ?? 5 
                     });
                   }}
                   className="flex-1"
                 />
                 <span className="text-xs font-mono text-muted-foreground w-6 text-right">
-                  {segment.padding?.left ?? 5}
+                  {segment.paddingLeft ?? 5}
                 </span>
               </div>
             </div>

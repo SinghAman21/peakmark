@@ -8,6 +8,9 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
   const iconPosition = params.get('iconPosition') 
     ? parseInt(params.get('iconPosition')!, 10) 
     : 0;
+  const paddingleft = params.get('paddingleft')
+    ? parseInt(params.get('paddingleft')!, 10)
+    : 5;
 
   // Parse segments from JSON string
   let segments: BadgeSegment[] | undefined;
@@ -15,6 +18,11 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
   if (segmentsParam) {
     try {
       segments = JSON.parse(decodeURIComponent(segmentsParam)) as BadgeSegment[];
+      // Apply paddingleft to all segments
+      segments = segments.map(seg => ({
+        ...seg,
+        paddingLeft: seg.paddingLeft ?? paddingleft
+      }));
     } catch (e) {
       // Fallback to legacy params if segments parse fails
     }
@@ -28,8 +36,8 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
     const messageColor = params.get('messageColor') || '#22d3ee';
 
     segments = [
-      { text: label, color: labelColor },
-      { text: message, color: messageColor },
+      { text: label, color: labelColor, paddingLeft: paddingleft },
+      { text: message, color: messageColor, paddingLeft: paddingleft },
     ];
   }
 

@@ -53,16 +53,15 @@ const calculateLayout = (
   const height = style === 'for-the-badge' ? 28 : 20;
   const iconWidth = iconData ? 14 : 0;
   const iconPadding = iconData ? 4 : 0;
-  const defaultPadding = { top: 0, right: 5, bottom: 0, left: 5 };
+  const defaultPaddingLeft = 5;
   
   let currentX = 0;
   const layouts: SegmentLayout[] = segments.map((segment, index) => {
     const hasIcon = iconData !== null && index === iconPosition;
     const segmentIconWidth = hasIcon ? iconWidth + iconPadding : 0;
-    const padLeft = segment.padding?.left ?? defaultPadding.left;
-    const padRight = segment.padding?.right ?? defaultPadding.right;
+    const padLeft = segment.paddingLeft ?? defaultPaddingLeft;
     const textWidth = getTextWidth(segment.text);
-    const width = textWidth + segmentIconWidth + padLeft + padRight - 10; // -10 to offset the base padding in getTextWidth
+    const width = textWidth + segmentIconWidth + padLeft - 5; // -5 to offset the base padding in getTextWidth
     
     const layout: SegmentLayout = {
       segment,

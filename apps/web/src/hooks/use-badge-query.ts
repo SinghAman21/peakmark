@@ -7,6 +7,7 @@ interface UseBadgeQueryParams {
   icon?: string;
   iconPosition?: number;
   link?: string;
+  paddingleft?: number;
   enabled?: boolean;
 }
 
@@ -27,15 +28,16 @@ interface UseBadgeQueryParams {
  * ```
  */
 export function useBadgeQuery(params: UseBadgeQueryParams) {
-  const { style = 'flat', segments, icon, iconPosition, link, enabled = true } = params;
+  const { style = 'flat', segments, icon, iconPosition, link, paddingleft = 5, enabled = true } = params;
 
   // Build query key
-  const queryKey = ['badge', style, segments, icon, iconPosition, link];
+  const queryKey = ['badge', style, segments, icon, iconPosition, link, paddingleft];
 
   // Build URL with query params
   const buildUrl = () => {
     const url = new URL('/badge', typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
     url.searchParams.set('style', style);
+    url.searchParams.set('paddingleft', String(paddingleft));
     
     if (segments && segments.length > 0) {
       url.searchParams.set('segments', JSON.stringify(segments));
