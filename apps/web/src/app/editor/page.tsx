@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Check, Link as LinkIcon, Download } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Code, Download } from 'lucide-react';
 import Link from 'next/link';
 // import { Header } from '@/components/Header';
 import type { Badge, BadgeSegment, BadgeAdvancedOptions } from '@/types/badge';
@@ -124,13 +124,16 @@ export default function EditorPage() {
       params.set('icon', badge.icon);
       params.set('iconPosition', String(badge.iconPosition ?? 0));
     }
+    if (badge.link) {
+      params.set('link', badge.link);
+    }
     if (typeof window !== 'undefined') {
       return `${window.location.origin}/badge?${params.toString()}`;
     }
     return `/badge?${params.toString()}`;
   };
 
-  const handleCopy = async (type: 'svg' | 'url' | 'md' | 'html') => {
+  const handleCopy = async (type: 'svg' | 'md' | 'html') => {
     let content = '';
     const svgTsxComponent = generateBadgeTSXComponent(badge);
     
@@ -138,11 +141,10 @@ export default function EditorPage() {
       case 'svg':
         content = svgTsxComponent;
         break;
-      case 'url':
-        content = generateBadgeUrl();
-        break;
       case 'md':
-        content = `![${badge.label}: ${badge.message}](${generateBadgeUrl()})`;
+        const badgeUrl = generateBadgeUrl();
+        const linkUrl = badge.link || badgeUrl;
+        content = `[![${badge.label}: ${badge.message}](${badgeUrl})](${linkUrl})`;
         break;
       case 'html':
         content = `<img src="${generateBadgeUrl()}" alt="${badge.label}: ${badge.message}" />`;
@@ -154,6 +156,17 @@ export default function EditorPage() {
     toast({
       title: 'Copied!',
       description: `${type.toUpperCase()} copied to clipboard`,
+    });
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  const handleCopyUrl = async () => {
+    const url = generateBadgeUrl();
+    await navigator.clipboard.writeText(url);
+    setCopied('url');
+    toast({
+      title: 'Copied!',
+      description: 'Badge URL copied to clipboard',
     });
     setTimeout(() => setCopied(null), 2000);
   };
@@ -210,9 +223,19 @@ export default function EditorPage() {
               <Label className="text-xs text-muted-foreground uppercase tracking-wider mb-2 block">
                 Badge URL
               </Label>
-              <code className="text-xs font-mono text-primary break-all whitespace-pre-wrap">
-                {generateBadgeUrl()}
-              </code>
+              <div className="flex items-start gap-2">
+                <code className="text-xs font-mono text-primary break-all whitespace-pre-wrap flex-1">
+                  {generateBadgeUrl()}
+                </code>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-7 w-7"
+                  onClick={handleCopyUrl}
+                >
+                  {copied === 'url' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                </Button>
+              </div>
             </div>
 
             {/* Export Buttons */}
@@ -239,10 +262,10 @@ export default function EditorPage() {
                 variant="secondary"
                 size="sm"
                 className="font-mono text-xs"
-                onClick={() => handleCopy('url')}
+                onClick={() => handleCopy('html')}
               >
-                {copied === 'url' ? <Check className="w-3 h-3 mr-1" /> : <LinkIcon className="w-3 h-3 mr-1" />}
-                URL
+                {copied === 'html' ? <Check className="w-3 h-3 mr-1" /> : <Code className="w-3 h-3 mr-1" />}
+                HTML
               </Button>
               <Button
                 variant="secondary"

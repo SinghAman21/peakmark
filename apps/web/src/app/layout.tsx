@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "my-better-t-app",
-  description: "my-better-t-app",
+  title: "Peakmark - Customizable Badges for Developers",
+  description: "Customizable badges for developers to showcase skills and achievements. Easily create, remix, and share badges for your projects.",
 };
 
 export default function RootLayout({

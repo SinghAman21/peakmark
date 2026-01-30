@@ -6,7 +6,8 @@ import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { BADGE_ICONS, SIMPLE_ICON_PATHS, LUCIDE_ICON_PATHS, BadgeIconDef } from '@/data/badgeIcons';
+import { BADGE_ICONS, SIMPLE_ICON_PATHS, LUCIDE_ICON_PATHS } from '@/data/badgeIcons';
+import type { BadgeIconDef } from '@/data/badgeIcons';
 
 interface IconPickerProps {
   selectedIcon?: string;

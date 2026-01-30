@@ -146,6 +146,10 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
       params.set('iconPosition', String(b.iconPosition ?? 0));
     }
     
+    if (b.link) {
+      params.set('link', b.link);
+    }
+    
     return `${window.location.origin}/badge?${params.toString()}`;
   }, []);
 
@@ -163,7 +167,9 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
         content = generateBadgeUrl(editedBadge);
         break;
       case 'md':
-        content = `![${editedBadge.label}: ${editedBadge.message}](${generateBadgeUrl(editedBadge)})`;
+        const badgeUrl = generateBadgeUrl(editedBadge);
+        const linkUrl = editedBadge.link || badgeUrl;
+        content = `[![${editedBadge.label}: ${editedBadge.message}](${badgeUrl})](${linkUrl})`;
         break;
       case 'html':
         content = `<img src="${generateBadgeUrl(editedBadge)}" alt="${editedBadge.label}: ${editedBadge.message}" />`;
