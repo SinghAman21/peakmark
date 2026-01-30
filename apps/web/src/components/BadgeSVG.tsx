@@ -540,3 +540,341 @@ export const generateBadgeSVGString = (badge: Badge): string => {
 
   return svg;
 };
+
+// Generate TSX-compatible SVG string for copying into TypeScript/React
+// export const generateBadgeSVGTSXString = (badge: Badge): string => {
+//   const segments = getBadgeSegments(badge);
+//   const iconData = getIconPath(badge.icon);
+//   const iconPosition = badge.iconPosition ?? 0;
+//   const { layouts, totalWidth, height } = calculateLayout(segments, iconData, iconPosition, badge.style);
+
+//   const baseFontSize = badge.style === 'for-the-badge' ? 10 : 11;
+//   const txtsize = badge.advanced?.txtsize ?? 1;
+//   const fontSize = baseFontSize * txtsize;
+
+//   const getRadius = () => {
+//     if (badge.advanced?.borderRadius !== undefined) return badge.advanced.borderRadius;
+//     switch (badge.style) {
+//       case 'flat-square': return 0;
+//       case 'plastic': return 4;
+//       case 'rounded': return 10;
+//       case 'folded': return 0;
+//       default: return 0;
+//     }
+//   };
+
+//   const radius = getRadius();
+//   const foldSize = badge.style === 'folded' ? 6 : 0;
+//   const link = badge.link || 'https://useraman.me';
+
+//   // Advanced options with defaults (match component)
+//   const opacity = badge.advanced?.opacity ?? 1;
+//   const border = badge.advanced?.border ?? 0;
+//   const borderColor = badge.advanced?.borderColor ?? '#ffffff';
+//   const shadowIntensity = typeof badge.advanced?.shadow === 'number' ? badge.advanced.shadow : 0;
+//   const shadowAngle = badge.advanced?.shadowAngle ?? 135;
+//   const glowIntensity = typeof badge.advanced?.glow === 'number' ? badge.advanced.glow : 0;
+//   const rotate = badge.advanced?.rotate ?? 0;
+
+//   // Shadow / glow calculations
+//   const shadowDistance = shadowIntensity / 3;
+//   const shadowDx = Math.cos((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
+//   const shadowDy = Math.sin((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
+
+//   const effectiveScale = getEffectiveScale(badge, 1);
+//   const svgWidth = (totalWidth + border * 2) * effectiveScale;
+//   const svgHeight = (height + border * 2) * effectiveScale;
+//   const filterId = `filter-${badge.id}`;
+//   const gradientId = `gradient-${badge.id}`;
+//   const foldGradientId = `fold-${badge.id}`;
+
+//   let segmentsSvg = '';
+
+//   layouts.forEach((layout, index) => {
+//     const isFirst = index === 0;
+//     const isLast = index === layouts.length - 1;
+//     const nextLayout = layouts[index + 1];
+
+//     if (isFirst && radius > 0) {
+//       const path = `M ${layout.x + radius},0 L ${layout.x + layout.width},0 L ${layout.x + layout.width},${height} L ${layout.x + radius},${height} Q ${layout.x},${height} ${layout.x},${height - radius} L ${layout.x},${radius} Q ${layout.x},0 ${layout.x + radius},0 Z`;
+//       segmentsSvg += `<path d="${path}" fill="${layout.segment.color}" />`;
+//     } else if (isLast && radius > 0) {
+//       const path = `M ${layout.x},0 L ${layout.x + layout.width - radius},0 Q ${layout.x + layout.width},0 ${layout.x + layout.width},${radius} L ${layout.x + layout.width},${height - radius} Q ${layout.x + layout.width},${height} ${layout.x + layout.width - radius},${height} L ${layout.x},${height} Z`;
+//       segmentsSvg += `<path d="${path}" fill="${layout.segment.color}" />`;
+//     } else {
+//       segmentsSvg += `<rect x="${layout.x}" y="0" width="${layout.width}" height="${height}" fill="${layout.segment.color}" />`;
+//     }
+
+//     if (isLast && badge.style === 'folded') {
+//       segmentsSvg += `<polygon points="${totalWidth - foldSize},0 ${totalWidth},0 ${totalWidth},${foldSize}" fill="#0f172a" />`;
+//       segmentsSvg += `<polygon points="${totalWidth - foldSize},0 ${totalWidth},${foldSize} ${totalWidth - foldSize},${foldSize}" fill="url(#${foldGradientId})" />`;
+//     }
+
+//     if (!isLast && nextLayout) {
+//       segmentsSvg += `<rect x="${layout.x + layout.width - 1}" y="0" width="2" height="${height}" fill="${layout.segment.color}" />`;
+//       segmentsSvg += `<rect x="${layout.x + layout.width}" y="0" width="1" height="${height}" fill="${nextLayout.segment.color}" />`;
+//     }
+
+//     if (layout.hasIcon && iconData) {
+//       const iconY = height / 2 - 6;
+//       const iconX = layout.x + (badge.style === 'for-the-badge' ? 6 : 5);
+//       if (iconData.type === 'simple') {
+//         segmentsSvg += `<g transform="translate(${iconX}, ${iconY}) scale(0.5)"><path d="${iconData.path}" fill="#fff" /></g>`;
+//       } else {
+//         segmentsSvg += `<g transform="translate(${iconX}, ${iconY}) scale(0.5)"><path d="${iconData.path}" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></g>`;
+//       }
+//     }
+
+//     const textX = layout.x + layout.iconWidth + (layout.width - layout.iconWidth) / 2;
+//     const textColor = isLightColor(layout.segment.color) ? '#000' : '#fff';
+//     const textValue = badge.style === 'for-the-badge'
+//       ? layout.segment.text.toUpperCase()
+//       : layout.segment.text;
+//     const fontWeight = badge.style === 'for-the-badge'
+//       ? (index === 0 ? 600 : 700)
+//       : (index === 0 ? 500 : 600);
+//     const textTransform = badge.style === 'for-the-badge' ? 'uppercase' : 'none';
+
+//     segmentsSvg += `<text x="${textX}" y="${height / 2 + 1}" fill="${textColor}" textAnchor="middle" dominantBaseline="middle" fontFamily="'JetBrains Mono', 'DejaVu Sans', Verdana, Geneva, sans-serif" fontSize="${fontSize}" fontWeight="${fontWeight}" letterSpacing="${badge.style === 'for-the-badge' ? '0.5px' : '0'}" style={{ textTransform: "${textTransform}" }}>${textValue}</text>`;
+//   });
+
+//   const viewBoxWidth = totalWidth + border * 2;
+//   const viewBoxHeight = height + border * 2;
+//   const cursorValue = link ? 'pointer' : 'default';
+//   const rotateStyle = rotate ? `, transform: "rotate(${rotate}deg)"` : '';
+
+//   let svg = `<svg xmlns="http://www.w3.org/2000/svg" width={${svgWidth}} height={${svgHeight}} viewBox="0 0 ${viewBoxWidth} ${viewBoxHeight}" role="img" aria-label="${segments.map((s) => s.text).join(': ')}" style={{ cursor: "${cursorValue}", opacity: ${opacity}${rotateStyle} }}>`;
+
+//   svg += `<defs>`;
+
+//   if (shadowIntensity > 0 || glowIntensity > 0) {
+//     svg += `<filter id="${filterId}-effects" x="-100%" y="-100%" width="300%" height="300%">`;
+//     if (glowIntensity > 0) {
+//       svg += `
+//         <feGaussianBlur in="SourceAlpha" stdDeviation="${glowIntensity / 3}" result="glowBlur" />
+//         <feColorMatrix in="glowBlur" type="matrix" values="0 0 0 0 0  0 0 0 0 0.8  0 0 0 0 1  0 0 0 0.6 0" result="coloredGlow" />
+//         <feMerge result="glow">
+//           <feMergeNode in="coloredGlow" />
+//           <feMergeNode in="SourceGraphic" />
+//         </feMerge>
+//       `;
+//     }
+//     if (shadowIntensity > 0) {
+//       svg += `<feDropShadow dx="${shadowDx}" dy="${shadowDy}" stdDeviation="${shadowIntensity / 4}" floodColor="#000" floodOpacity="${Math.min(0.7, shadowIntensity / 15)}" result="shadow" />`;
+//     }
+//     svg += `</filter>`;
+//   }
+
+//   svg += `<linearGradient id="${gradientId}" x2="0" y2="100%">
+//     <stop offset="0" stopColor="#fff" stopOpacity=".1" />
+//     <stop offset="1" stopOpacity=".1" />
+//   </linearGradient>`;
+
+//   if (badge.style === 'folded') {
+//     svg += `<linearGradient id="${foldGradientId}" x1="0%" y1="0%" x2="100%" y2="100%">
+//       <stop offset="0%" stopColor="#000" stopOpacity="0.2" />
+//       <stop offset="100%" stopColor="#000" stopOpacity="0.4" />
+//     </linearGradient>`;
+//   }
+
+//   svg += `</defs>`;
+
+//   svg += `<g transform="translate(${border}, ${border})"${shadowIntensity > 0 || glowIntensity > 0 ? ` filter="url(#${filterId}-effects)"` : ''}>`;
+
+//   if (border > 0) {
+//     svg += `<rect x="${-border}" y="${-border}" width="${totalWidth + border * 2}" height="${height + border * 2}" fill="none" stroke="${borderColor}" strokeWidth="${border}" />`;
+//   }
+
+//   svg += segmentsSvg;
+
+//   if (badge.style === 'plastic') {
+//     svg += `<rect x="0" y="0" width="${totalWidth}" height="${height}" rx="${radius}" fill="url(#${gradientId})" />`;
+//   }
+
+//   svg += `</g>`;
+//   svg += `<a href="${link}" target="_blank" rel="noopener noreferrer" />`;
+//   svg += `</svg>`;
+
+//   return svg;
+// };
+
+// Generate a complete TypeScript component function for copying
+export const generateBadgeTSXComponent = (badge: Badge): string => {
+  const segments = getBadgeSegments(badge);
+  const iconData = getIconPath(badge.icon);
+  const iconPosition = badge.iconPosition ?? 0;
+  const { layouts, totalWidth, height } = calculateLayout(segments, iconData, iconPosition, badge.style);
+
+  const baseFontSize = badge.style === 'for-the-badge' ? 10 : 11;
+  const txtsize = badge.advanced?.txtsize ?? 1;
+  const fontSize = baseFontSize * txtsize;
+
+  const getRadius = () => {
+    if (badge.advanced?.borderRadius !== undefined) return badge.advanced.borderRadius;
+    switch (badge.style) {
+      case 'flat-square': return 0;
+      case 'plastic': return 4;
+      case 'rounded': return 10;
+      case 'folded': return 0;
+      default: return 0;
+    }
+  };
+
+  const radius = getRadius();
+  const foldSize = badge.style === 'folded' ? 6 : 0;
+  const link = badge.link || 'https://useraman.me';
+
+  // Advanced options with defaults
+  const opacity = badge.advanced?.opacity ?? 1;
+  const border = badge.advanced?.border ?? 0;
+  const borderColor = badge.advanced?.borderColor ?? '#ffffff';
+  const shadowIntensity = typeof badge.advanced?.shadow === 'number' ? badge.advanced.shadow : 0;
+  const shadowAngle = badge.advanced?.shadowAngle ?? 135;
+  const glowIntensity = typeof badge.advanced?.glow === 'number' ? badge.advanced.glow : 0;
+  const rotate = badge.advanced?.rotate ?? 0;
+
+  // Shadow / glow calculations
+  const shadowDistance = shadowIntensity / 3;
+  const shadowDx = Math.cos((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
+  const shadowDy = Math.sin((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
+
+  const effectiveScale = getEffectiveScale(badge, 1);
+  const svgWidth = (totalWidth + border * 2) * effectiveScale;
+  const svgHeight = (height + border * 2) * effectiveScale;
+  const filterId = `filter-${badge.id}`;
+  const gradientId = `gradient-${badge.id}`;
+  const foldGradientId = `fold-${badge.id}`;
+
+  const componentName = 'BadgeSVG';
+  const ariaLabel = segments.map((s) => s.text).join(': ');
+
+  let component = `export const ${componentName} = (props: React.SVGProps<SVGSVGElement>) => (\n`;
+  component += `  <svg\n`;
+  component += `    xmlns="http://www.w3.org/2000/svg"\n`;
+  component += `    width={${svgWidth}}\n`;
+  component += `    height={${svgHeight}}\n`;
+  component += `    viewBox="0 0 ${totalWidth + border * 2} ${height + border * 2}"\n`;
+  component += `    role="img"\n`;
+  component += `    aria-label="${ariaLabel}"\n`;
+  component += `    style={{ cursor: "${link ? 'pointer' : 'default'}", opacity: ${opacity}${rotate ? `, transform: "rotate(${rotate}deg)"` : ''} }}\n`;
+  component += `    {...props}\n`;
+  component += `  >\n`;
+
+  // Defs section
+  component += `    <defs>\n`;
+
+  // Filters
+  if (shadowIntensity > 0 || glowIntensity > 0) {
+    component += `      <filter id="${filterId}-effects" x="-100%" y="-100%" width="300%" height="300%">\n`;
+    if (glowIntensity > 0) {
+      component += `        <feGaussianBlur in="SourceAlpha" stdDeviation="${glowIntensity / 3}" result="glowBlur" />\n`;
+      component += `        <feColorMatrix in="glowBlur" type="matrix" values="0 0 0 0 0  0 0 0 0 0.8  0 0 0 0 1  0 0 0 0.6 0" result="coloredGlow" />\n`;
+      component += `        <feMerge result="glow">\n`;
+      component += `          <feMergeNode in="coloredGlow" />\n`;
+      component += `          <feMergeNode in="SourceGraphic" />\n`;
+      component += `        </feMerge>\n`;
+    }
+    if (shadowIntensity > 0) {
+      component += `        <feDropShadow dx="${shadowDx}" dy="${shadowDy}" stdDeviation="${shadowIntensity / 4}" floodColor="#000" floodOpacity="${Math.min(0.7, shadowIntensity / 15)}" result="shadow" />\n`;
+    }
+    component += `      </filter>\n`;
+  }
+
+  // Gradients
+  component += `      <linearGradient id="${gradientId}" x2="0" y2="100%">\n`;
+  component += `        <stop offset="0" stopColor="#fff" stopOpacity=".1" />\n`;
+  component += `        <stop offset="1" stopOpacity=".1" />\n`;
+  component += `      </linearGradient>\n`;
+
+  if (badge.style === 'folded') {
+    component += `      <linearGradient id="${foldGradientId}" x1="0%" y1="0%" x2="100%" y2="100%">\n`;
+    component += `        <stop offset="0%" stopColor="#000" stopOpacity="0.2" />\n`;
+    component += `        <stop offset="100%" stopColor="#000" stopOpacity="0.4" />\n`;
+    component += `      </linearGradient>\n`;
+  }
+
+  component += `    </defs>\n`;
+
+  // Main group
+  const filterAttr = shadowIntensity > 0 || glowIntensity > 0 ? ` filter="url(#${filterId}-effects)"` : '';
+  component += `    <g transform="translate(${border}, ${border})"${filterAttr}>\n`;
+
+  // Border
+  if (border > 0) {
+    component += `      <rect x="${-border}" y="${-border}" width="${totalWidth + border * 2}" height="${height + border * 2}" fill="none" stroke="${borderColor}" strokeWidth="${border}" />\n`;
+  }
+
+  // Segments
+  layouts.forEach((layout, index) => {
+    const isFirst = index === 0;
+    const isLast = index === layouts.length - 1;
+    const nextLayout = layouts[index + 1];
+
+    if (isFirst && radius > 0) {
+      const path = `M ${layout.x + radius},0 L ${layout.x + layout.width},0 L ${layout.x + layout.width},${height} L ${layout.x + radius},${height} Q ${layout.x},${height} ${layout.x},${height - radius} L ${layout.x},${radius} Q ${layout.x},0 ${layout.x + radius},0 Z`;
+      component += `      <path d="${path}" fill="${layout.segment.color}" />\n`;
+    } else if (isLast && radius > 0) {
+      const path = `M ${layout.x},0 L ${layout.x + layout.width - radius},0 Q ${layout.x + layout.width},0 ${layout.x + layout.width},${radius} L ${layout.x + layout.width},${height - radius} Q ${layout.x + layout.width},${height} ${layout.x + layout.width - radius},${height} L ${layout.x},${height} Z`;
+      component += `      <path d="${path}" fill="${layout.segment.color}" />\n`;
+    } else {
+      component += `      <rect x="${layout.x}" y="0" width="${layout.width}" height="${height}" fill="${layout.segment.color}" />\n`;
+    }
+
+    if (isLast && badge.style === 'folded') {
+      component += `      <polygon points="${totalWidth - foldSize},0 ${totalWidth},0 ${totalWidth},${foldSize}" fill="#0f172a" />\n`;
+      component += `      <polygon points="${totalWidth - foldSize},0 ${totalWidth},${foldSize} ${totalWidth - foldSize},${foldSize}" fill="url(#${foldGradientId})" />\n`;
+    }
+
+    if (!isLast && nextLayout) {
+      component += `      <rect x="${layout.x + layout.width - 1}" y="0" width="2" height="${height}" fill="${layout.segment.color}" />\n`;
+      component += `      <rect x="${layout.x + layout.width}" y="0" width="1" height="${height}" fill="${nextLayout.segment.color}" />\n`;
+    }
+
+    if (layout.hasIcon && iconData) {
+      const iconY = height / 2 - 6;
+      const iconX = layout.x + (badge.style === 'for-the-badge' ? 6 : 5);
+      if (iconData.type === 'simple') {
+        component += `      <g transform="translate(${iconX}, ${iconY}) scale(0.5)">\n`;
+        component += `        <path d="${iconData.path}" fill="#fff" />\n`;
+        component += `      </g>\n`;
+      } else {
+        component += `      <g transform="translate(${iconX}, ${iconY}) scale(0.5)">\n`;
+        component += `        <path d="${iconData.path}" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />\n`;
+        component += `      </g>\n`;
+      }
+    }
+
+    const textX = layout.x + layout.iconWidth + (layout.width - layout.iconWidth) / 2;
+    const textColor = isLightColor(layout.segment.color) ? '#000' : '#fff';
+    const textValue = badge.style === 'for-the-badge' ? layout.segment.text.toUpperCase() : layout.segment.text;
+    const fontWeight = badge.style === 'for-the-badge' ? (index === 0 ? 600 : 700) : (index === 0 ? 500 : 600);
+    const textTransform = badge.style === 'for-the-badge' ? 'uppercase' : 'none';
+
+    component += `      <text\n`;
+    component += `        x="${textX}"\n`;
+    component += `        y="${height / 2 + 1}"\n`;
+    component += `        fill="${textColor}"\n`;
+    component += `        textAnchor="middle"\n`;
+    component += `        dominantBaseline="middle"\n`;
+    component += `        fontFamily="'JetBrains Mono', 'DejaVu Sans', Verdana, Geneva, sans-serif"\n`;
+    component += `        fontSize="${fontSize}"\n`;
+    component += `        fontWeight="${fontWeight}"\n`;
+    component += `        letterSpacing="${badge.style === 'for-the-badge' ? '0.5px' : '0'}"\n`;
+    component += `        style={{ textTransform: "${textTransform}" }}\n`;
+    component += `      >\n`;
+    component += `        ${textValue}\n`;
+    component += `      </text>\n`;
+  });
+
+  // Plastic overlay
+  if (badge.style === 'plastic') {
+    component += `      <rect x="0" y="0" width="${totalWidth}" height="${height}" rx="${radius}" fill="url(#${gradientId})" />\n`;
+  }
+
+  component += `    </g>\n`;
+  component += `    <a href="${link}" target="_blank" rel="noopener noreferrer" />\n`;
+  component += `  </svg>\n`;
+  component += `);\n`;
+
+  return component;
+};

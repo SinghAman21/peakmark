@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { BadgeGallery } from '@/components/BadgeGallery';
 import { BadgeEditor } from '@/components/BadgeEditor';
 import type { Badge } from '@/types/badge';
+import { DownArrow } from '@/components/downarrow';
 
 interface RemixData {
   badge: Badge;
@@ -40,6 +41,8 @@ export default function Home() {
       
       <main>
         <HeroSection />
+        
+        <DownArrow/>
         
         {/* Gallery Section */}
         <section className="py-16 px-4">

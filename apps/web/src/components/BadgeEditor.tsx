@@ -6,7 +6,7 @@ import { X, Copy, Check, Link, Download, Image } from 'lucide-react';
 import type { Badge, BadgeSegment } from '@/types/badge';
 import type { BadgeAdvancedOptions } from '@/types/badge';
 import { getBadgeSegments } from '@/types/badge';
-import { BadgeSVG, generateBadgeSVGString } from './BadgeSVG';
+import { BadgeSVG, generateBadgeSVGString, generateBadgeTSXComponent } from './BadgeSVG';
 import { IconPicker } from './IconPicker';
 import { SegmentEditor } from './SegmentEditor';
 import { AdvancedBadgeSettings } from './AdvancedBadgeSettings';
@@ -153,11 +153,11 @@ export const BadgeEditor = ({ badge, isOpen, onClose, onUpdate }: BadgeEditorPro
     if (!editedBadge) return;
     
     let content = '';
-    const svgString = generateBadgeSVGString(editedBadge);
+    const svgTsxComponent = generateBadgeTSXComponent(editedBadge);
     
     switch (type) {
       case 'svg':
-        content = svgString;
+        content = svgTsxComponent;
         break;
       case 'url':
         content = generateBadgeUrl(editedBadge);

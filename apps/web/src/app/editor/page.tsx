@@ -7,7 +7,7 @@ import Link from 'next/link';
 // import { Header } from '@/components/Header';
 import type { Badge, BadgeSegment, BadgeAdvancedOptions } from '@/types/badge';
 import { getBadgeSegments } from '@/types/badge';
-import { BadgeSVG, generateBadgeSVGString } from '@/components/BadgeSVG';
+import { BadgeSVG, generateBadgeSVGString, generateBadgeTSXComponent } from '@/components/BadgeSVG';
 import { SegmentEditor } from '@/components/SegmentEditor';
 import { IconPicker } from '@/components/IconPicker';
 import { AdvancedBadgeSettings } from '@/components/AdvancedBadgeSettings';
@@ -132,11 +132,11 @@ export default function EditorPage() {
 
   const handleCopy = async (type: 'svg' | 'url' | 'md' | 'html') => {
     let content = '';
-    const svgString = generateBadgeSVGString(badge);
+    const svgTsxComponent = generateBadgeTSXComponent(badge);
     
     switch (type) {
       case 'svg':
-        content = svgString;
+        content = svgTsxComponent;
         break;
       case 'url':
         content = generateBadgeUrl();
