@@ -43,6 +43,7 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
       opacity: 1,
       border: 0,
       borderColor: '#ffffff',
+      borderRadius: undefined,
       shadow: 0,
       shadowAngle: 135,
       glow: 0,
@@ -173,6 +174,27 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               className="w-8 h-8 p-0.5 top-[-1] cursor-pointer border-border"
             />
           </div>
+        </div>
+
+        {/* Border Radius */}
+        <div className="space-y-2">
+          <Label className="font-mono text-sm flex items-center justify-between">
+            Border Radius
+            <span className="text-xs text-muted-foreground font-normal">
+              {advanced.borderRadius ?? 'auto'}px
+            </span>
+          </Label>
+          <Slider
+            value={[advanced.borderRadius ?? 3]}
+            onValueChange={(val) => {
+              const value = Array.isArray(val) ? val[0] : val;
+              updateField('borderRadius', value);
+            }}
+            min={0}
+            max={10}
+            step={1}
+            className="w-full"
+          />
         </div>
 
         {/* Rotation */}

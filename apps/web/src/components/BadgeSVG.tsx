@@ -116,8 +116,9 @@ export const BadgeSVG = React.memo(({ badge, scale = 1 }: BadgeSVGProps) => {
   const shadowDx = Math.cos((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
   const shadowDy = Math.sin((shadowAngle - 90) * Math.PI / 180) * shadowDistance;
   
-  // Radius based on style
+  // Radius based on style or advanced options
   const getRadius = () => {
+    if (advanced?.borderRadius !== undefined) return advanced.borderRadius;
     switch (style) {
       case 'flat-square': return 0;
       case 'plastic': return 4;
@@ -234,40 +235,42 @@ export const BadgeSVG = React.memo(({ badge, scale = 1 }: BadgeSVGProps) => {
 
           {/* Render segments */}
           {layouts.map((layout, index) => {
+            const isFirst = index === 0;
             const isLast = index === layouts.length - 1;
             const nextLayout = layouts[index + 1];
 
             return (
               <g key={index}>
-                {/* Segment background */}
-                <rect x={layout.x} y="0" width={layout.width} height={height} fill={layout.segment.color} />
-
-                {/* Round right corners only for last segment */}
-                {isLast && radius > 0 && (
-                  <rect
-                    x={layout.x + layout.width - radius}
-                    y="0"
-                    width={radius}
-                    height={height}
-                    rx={radius}
+                {/* Segment background with clipping for rounded corners */}
+                {isFirst && radius > 0 ? (
+                  // First segment with rounded left corners
+                  <path
+                    d={`M ${layout.x + radius},0 L ${layout.x + layout.width},0 L ${layout.x + layout.width},${height} L ${layout.x + radius},${height} Q ${layout.x},${height} ${layout.x},${height - radius} L ${layout.x},${radius} Q ${layout.x},0 ${layout.x + radius},0 Z`}
                     fill={layout.segment.color}
                   />
+                ) : isLast && radius > 0 ? (
+                  // Last segment with rounded right corners
+                  <path
+                    d={`M ${layout.x},0 L ${layout.x + layout.width - radius},0 Q ${layout.x + layout.width},0 ${layout.x + layout.width},${radius} L ${layout.x + layout.width},${height - radius} Q ${layout.x + layout.width},${height} ${layout.x + layout.width - radius},${height} L ${layout.x},${height} Z`}
+                    fill={layout.segment.color}
+                  />
+                ) : (
+                  // Middle segments with no rounding
+                  <rect x={layout.x} y="0" width={layout.width} height={height} fill={layout.segment.color} />
                 )}
 
                 {/* Folded corner effect on last segment */}
                 {isLast && style === 'folded' && (
-                  <>
+                    <>
                     <polygon
                       points={`${totalWidth - foldSize},0 ${totalWidth},0 ${totalWidth},${foldSize}`}
                       fill="#0f172a"
                     />
                     <polygon
-                      points={`${totalWidth - foldSize},0 ${totalWidth},${foldSize} ${
-                        totalWidth - foldSize
-                      },${foldSize}`}
+                      points={`${totalWidth - foldSize},0 ${totalWidth},${foldSize} ${totalWidth - foldSize},${foldSize}`}
                       fill={`url(#fold-${badge.id})`}
                     />
-                  </>
+                    </>
                 )}
 
                 {/* Cover inner radius joins */}
@@ -376,12 +379,13 @@ export const generateBadgeSVGString = (badge: Badge): string => {
   const fontSize = baseFontSize * txtsize;
 
   const getRadius = () => {
+    if (badge.advanced?.borderRadius !== undefined) return badge.advanced.borderRadius;
     switch (badge.style) {
       case 'flat-square': return 0;
       case 'plastic': return 4;
       case 'rounded': return 10;
       case 'folded': return 0;
-      default: return 3;
+      default: return 0;
     }
   };
 
@@ -414,15 +418,22 @@ export const generateBadgeSVGString = (badge: Badge): string => {
 
   // Render segments (match component logic)
   layouts.forEach((layout, index) => {
+    const isFirst = index === 0;
     const isLast = index === layouts.length - 1;
     const nextLayout = layouts[index + 1];
 
-    // Segment background
-    segmentsSvg += `<rect x="${layout.x}" y="0" width="${layout.width}" height="${height}" fill="${layout.segment.color}"/>`;
-
-    // Round right corners for last segment
-    if (isLast && radius > 0) {
-      segmentsSvg += `<rect x="${layout.x + layout.width - radius}" y="0" width="${radius}" height="${height}" rx="${radius}" fill="${layout.segment.color}"/>`;
+    // Segment background with proper rounded corners
+    if (isFirst && radius > 0) {
+      // First segment with rounded left corners
+      const path = `M ${layout.x + radius},0 L ${layout.x + layout.width},0 L ${layout.x + layout.width},${height} L ${layout.x + radius},${height} Q ${layout.x},${height} ${layout.x},${height - radius} L ${layout.x},${radius} Q ${layout.x},0 ${layout.x + radius},0 Z`;
+      segmentsSvg += `<path d="${path}" fill="${layout.segment.color}"/>`;
+    } else if (isLast && radius > 0) {
+      // Last segment with rounded right corners
+      const path = `M ${layout.x},0 L ${layout.x + layout.width - radius},0 Q ${layout.x + layout.width},0 ${layout.x + layout.width},${radius} L ${layout.x + layout.width},${height - radius} Q ${layout.x + layout.width},${height} ${layout.x + layout.width - radius},${height} L ${layout.x},${height} Z`;
+      segmentsSvg += `<path d="${path}" fill="${layout.segment.color}"/>`;
+    } else {
+      // Middle segments with no rounding
+      segmentsSvg += `<rect x="${layout.x}" y="0" width="${layout.width}" height="${height}" fill="${layout.segment.color}"/>`;
     }
 
     // Folded corner on last segment

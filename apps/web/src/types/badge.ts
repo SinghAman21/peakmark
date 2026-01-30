@@ -24,6 +24,7 @@ export interface BadgeAdvancedOptions {
   opacity?: number; // 0-1
   border?: number; // Border thickness in px
   borderColor?: string; // Border color
+  borderRadius?: number; // Border radius in px (overrides style default)
   shadow?: number; // Drop shadow intensity (0-20)
   shadowAngle?: number; // Shadow angle direction (0-360 degrees)
   glow?: number; // Glow effect intensity (0-30)

@@ -14,8 +14,9 @@ const BASE_ADVANCED: BadgeAdvancedOptions = {
   opacity: 1,
   border: 0,
   borderColor: '#ffffff',
+  borderRadius: undefined,
   shadow: 0,
-  shadowAngle: 135,
+  shadowAngle: 0,
   glow: 0,
   rotate: 0,
   txtsize: 1,
@@ -45,7 +46,7 @@ export const BADGE_STYLE_PRESETS: Record<BadgeStyle, StylePreset> = {
   rounded: {
     label: 'Rounded (Pill)',
     description: 'Pill corners; works well for “status” badges.',
-    advanced: { ...BASE_ADVANCED, shadow: 1 },
+    advanced: { ...BASE_ADVANCED, borderRadius: 10 },
   },
   folded: {
     label: 'Folded Corner',
