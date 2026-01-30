@@ -7,6 +7,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { BadgeGallery } from '@/components/BadgeGallery';
 import { BadgeEditor } from '@/components/BadgeEditor';
 import type { Badge } from '@/types/badge';
+import { Github, Twitter } from 'lucide-react';
 // import { DownArrow } from '@/components/downarrow';
 
 interface RemixData {
@@ -34,6 +35,9 @@ export default function Home() {
   const handleUpdateBadge = useCallback((updated: Badge) => {
     setRemixData((prev) => prev ? { ...prev, badge: updated } : null);
   }, []);
+
+  const date = new Date();
+  const year = date.getFullYear();
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,12 +107,11 @@ export default function Home() {
       <footer className="py-8 px-4 border-t border-border/50">
         <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground font-mono">
-            © 2024 Peakmark. Built for developers.
+             &copy; {year} Peakmark. Built for Developers. By <a href="https://useraman.me" target="_blank" rel="noopener noreferrer"> <i>Dev</i></a>
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Docs</a>
-            <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
-            <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
+            <a href="https://github.com/SinghAman21/peakmark" className="hover:text-foreground transition-colors"><Github className="w-5 h-5" /></a>
+            <a href="https://x.com/SinghAman21_" className="hover:text-foreground transition-colors">  𝕏 (Twitter)</a>
           </div>
         </div>
       </footer>

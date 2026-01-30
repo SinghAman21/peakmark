@@ -19,7 +19,7 @@ export const Header = () => {
             <Badge className="w-5 h-5 text-primary" />
           </motion.div>
           <span className="font-mono font-bold text-xl tracking-tight">
-            peak<span className="text-primary">mark</span>
+            Peak<span className="text-primary">Mark</span>
           </span>
         </Link>
 
@@ -32,7 +32,7 @@ export const Header = () => {
             </Button>
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/SinghAman21/peakmark"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"

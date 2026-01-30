@@ -326,7 +326,7 @@ export const seedBadges: Badge[] = [
     link: 'https://peakmark.io',
     segments: [
       { text: 'made by', color: '#0f172a', paddingLeft: 8 },
-      { text: 'Peakmark', color: '#22d3ee', paddingLeft: 8 },
+      { text: 'Peakmark', color: '#22d3ee', paddingLeft: 15 },
     ],
     advanced: {
       size: 'lg',
