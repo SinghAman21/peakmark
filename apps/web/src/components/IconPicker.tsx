@@ -63,7 +63,7 @@ export const IconPicker = ({ selectedIcon, onSelect }: IconPickerProps) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search icons..."
-          className="pl-9 font-mono text-sm bg-secondary/50"
+          className="pl-9 font-mono text-sm bg-secondary/50 rounded-2xl border-border/50 hover:border-primary/30 focus:border-primary/50 transition-all duration-300"
         />
       </div>
 
@@ -74,7 +74,7 @@ export const IconPicker = ({ selectedIcon, onSelect }: IconPickerProps) => {
             key={cat.id}
             size="sm"
             variant={activeCategory === cat.id ? 'default' : 'ghost'}
-            className="h-7 px-2.5 text-xs font-mono"
+            className="h-7 px-2.5 text-xs font-mono rounded-xl"
             onClick={() => setActiveCategory(cat.id)}
           >
             {cat.label}

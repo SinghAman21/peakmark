@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Image } from "lucide-react";
+import { Image, ChevronDown } from "lucide-react";
 import type { Badge, BadgeSegment, BadgeAdvancedOptions } from "@/types/badge";
 import { getBadgeSegments } from "@/types/badge";
 import { IconPicker } from "@/components/IconPicker";
@@ -121,18 +121,31 @@ export const CustomizePanel = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      className="glass-panel p-6 rounded-xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      className="relative group"
     >
-      <h2 className="font-mono font-semibold text-lg mb-6">Customize Badge</h2>
+      {/* Gradient glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent rounded-[2rem] blur-2xl group-hover:blur-3xl transition-all duration-500" />
+      
+      <div className="relative p-8 rounded-[2rem] border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="font-mono font-bold text-xl">Customize Badge</h2>
+          <span className="text-xs font-mono text-muted-foreground px-3 py-1.5 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">Editor</span>
+        </div>
 
-      <div className="space-y-6">
+        <div className="space-y-8">
         {/* Icon Picker */}
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Label className="font-mono text-sm mb-3 block font-semibold">Icon</Label>
           <Button
             variant="outline"
-            className="w-full justify-between font-mono text-sm"
+            className="w-full justify-between font-mono text-sm h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
             onClick={() => setIconPickerOpen(!iconPickerOpen)}
           >
             <span className="flex items-center gap-2">
@@ -149,23 +162,23 @@ export const CustomizePanel = ({
                 </>
               )}
             </span>
-            <motion.span
+            <motion.div
               animate={{ rotate: iconPickerOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              ▼
-            </motion.span>
+              <ChevronDown className="w-4 h-4" />
+            </motion.div>
           </Button>
           <AnimatePresence>
             {iconPickerOpen && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                initial={{ height: 0, opacity: 0, y: -10 }}
+                animate={{ height: "auto", opacity: 1, y: 0 }}
+                exit={{ height: 0, opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="overflow-hidden"
               >
-                <div className="pt-3">
+                <div className="pt-4 px-4 pb-4 mt-3 rounded-xl bg-muted/30 border border-border/50">
                   <IconPicker
                     selectedIcon={badge.icon}
                     onSelect={(icon) => updateField("icon", icon)}
@@ -174,31 +187,42 @@ export const CustomizePanel = ({
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Segment Editor */}
-        <SegmentEditor
-          segments={currentSegments}
-          iconPosition={badge.iconPosition ?? 0}
-          hasIcon={!!badge.icon}
-          onSegmentsChange={handleSegmentsChange}
-          onIconPositionChange={handleIconPositionChange}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <SegmentEditor
+            segments={currentSegments}
+            iconPosition={badge.iconPosition ?? 0}
+            hasIcon={!!badge.icon}
+            onSegmentsChange={handleSegmentsChange}
+            onIconPositionChange={handleIconPositionChange}
+          />
+        </motion.div>
 
         {/* Style */}
-        <div className="space-y-2">
-          <Label className="font-mono text-sm">Badge Style</Label>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="space-y-3"
+        >
+          <Label className="font-mono text-sm font-semibold">Badge Style</Label>
           <Select value={badge.style} onValueChange={handleStyleChange}>
-            <SelectTrigger className="font-mono bg-secondary/50 border-border">
+            <SelectTrigger className="font-mono h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="flat">Flat</SelectItem>
-              <SelectItem value="flat-square">Flat Square</SelectItem>
-              <SelectItem value="plastic">Plastic</SelectItem>
-              <SelectItem value="for-the-badge">For The Badge</SelectItem>
-              <SelectItem value="rounded">Rounded (Pill)</SelectItem>
-              <SelectItem value="folded">Folded Corner</SelectItem>
+            <SelectContent className="rounded-2xl border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl">
+              <SelectItem value="flat" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Flat</SelectItem>
+              <SelectItem value="flat-square" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Flat Square</SelectItem>
+              <SelectItem value="plastic" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Plastic</SelectItem>
+              <SelectItem value="for-the-badge" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">For The Badge</SelectItem>
+              <SelectItem value="rounded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Rounded (Pill)</SelectItem>
+              <SelectItem value="folded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Folded Corner</SelectItem>
             </SelectContent>
           </Select>
           <BadgeStylePresetPanel
@@ -206,13 +230,20 @@ export const CustomizePanel = ({
             style={badge.style}
             onApply={onBadgeChange}
           />
-        </div>
+        </motion.div>
 
         {/* Advanced Settings */}
-        <AdvancedBadgeSettings
-          advanced={badge.advanced ?? {}}
-          onChange={handleAdvancedChange}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <AdvancedBadgeSettings
+            advanced={badge.advanced ?? {}}
+            onChange={handleAdvancedChange}
+          />
+        </motion.div>
+      </div>
       </div>
     </motion.div>
   );

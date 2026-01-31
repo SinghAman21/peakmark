@@ -13,14 +13,14 @@ export function RoundedStylePreset({ badge, onApply }: { badge: Badge; onApply: 
           <div className="font-mono text-sm">{preset.label}</div>
           <div className="text-xs text-muted-foreground">{preset.description}</div>
         </div>
-        <Button
+        {/* <Button
           variant="secondary"
           size="sm"
           className="font-mono text-xs"
           onClick={() => onApply(applyStylePreset(badge, "rounded"))}
         >
           Apply preset
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

@@ -13,9 +13,9 @@ export function FlatStylePreset({ badge, onApply }: { badge: Badge; onApply: (b:
           <div className="font-mono text-sm">{preset.label}</div>
           <div className="text-xs text-muted-foreground">{preset.description}</div>
         </div>
-        <Button variant="secondary" size="sm" className="font-mono text-xs" onClick={() => onApply(applyStylePreset(badge, "flat"))}>
+        {/* <Button variant="secondary" size="sm" className="font-mono text-xs" onClick={() => onApply(applyStylePreset(badge, "flat"))}>
           Apply preset
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

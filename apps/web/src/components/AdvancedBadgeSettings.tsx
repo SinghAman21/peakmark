@@ -9,7 +9,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { Settings2, RotateCcw } from 'lucide-react';
+import { Settings2, RotateCcw, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 interface AdvancedBadgeSettingsProps {
@@ -56,32 +56,33 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
 
   return (
     <div>
+      <Label className="font-mono text-sm mb-3 block font-semibold">Advanced Settings</Label>
       <Button
         variant="outline"
-        className="w-full justify-between font-mono text-sm"
+        className="w-full justify-between font-mono text-sm h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="flex items-center gap-2">
           <Settings2 className="w-4 h-4" />
-          Advanced Settings
+          {isOpen ? 'Hide' : 'Show'} Advanced Options
         </span>
-        <motion.span
+        <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
-          ▼
-        </motion.span>
+          <ChevronDown className="w-4 h-4" />
+        </motion.div>
       </Button>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            initial={{ height: 0, opacity: 0, y: -10 }}
+            animate={{ height: 'auto', opacity: 1, y: 0 }}
+            exit={{ height: 0, opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="pt-4 space-y-5">
+            <div className="pt-4 px-5 pb-5 mt-3 space-y-6 rounded-2xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50">
         {/* Size Presets */}
         <div className="space-y-2">
           <Label className="font-mono text-sm flex items-center justify-between">
@@ -98,13 +99,13 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               if (!value) return;
               handleSizePreset(value[0] as unknown as BadgeSize);
             }}
-            className="justify-start"
+            className="justify-start gap-2"
           >
             {(Object.keys(BADGE_SIZE_PRESETS) as BadgeSize[]).map((size) => (
               <ToggleGroupItem
                 key={size}
                 value={size}
-                className="font-mono text-xs uppercase px-4"
+                className="font-mono text-xs uppercase px-4 rounded-xl data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover:bg-primary/10 transition-all duration-300"
               >
                 {size}
               </ToggleGroupItem>
@@ -179,7 +180,7 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               type="color"
               value={advanced.borderColor ?? '#ffffff'}
               onChange={(e) => updateField('borderColor', e.target.value)}
-              className="w-8 h-8 p-0.5 top-[-1] cursor-pointer border-border"
+              className="w-10 h-10 p-1 cursor-pointer rounded-xl border-2 border-border/50 hover:border-primary/30 transition-all duration-300"
             />
           </div>
         </div>
@@ -292,15 +293,17 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
         </div> */}
 
         {/* Reset Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={resetToDefaults}
-          className="w-full font-mono text-xs text-muted-foreground hover:text-foreground"
-        >
-          <RotateCcw className="w-3 h-3 mr-2" />
-          Reset to Defaults
-        </Button>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={resetToDefaults}
+            className="w-full font-mono text-xs h-10 rounded-xl text-muted-foreground hover:text-foreground hover:bg-destructive/10 border border-transparent hover:border-destructive/30 transition-all duration-300"
+          >
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Reset to Defaults
+          </Button>
+        </motion.div>
             </div>
           </motion.div>
         )}

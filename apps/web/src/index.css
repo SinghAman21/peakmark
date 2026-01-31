@@ -124,5 +124,59 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  /* Blob animation for background orbs */
+  @keyframes blob {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(20px, -50px) scale(1.1);
+    }
+    50% {
+      transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+      transform: translate(50px, 50px) scale(1.05);
+    }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  /* Grid pattern */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgb(128 128 128 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(128 128 128 / 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Smooth gradient text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-pink-500;
+  }
+
+  /* Glass effect */
+  .glass-effect {
+    @apply bg-background/40 backdrop-blur-lg border border-border/50;
+  }
+
+  /* Smooth hover lift */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
   }
 }
