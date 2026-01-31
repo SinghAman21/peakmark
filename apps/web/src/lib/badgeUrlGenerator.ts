@@ -1,10 +1,13 @@
 import type { Badge } from "@/types/badge";
 import { getBadgeSegments } from "@/types/badge";
 
+// Default production URL for badge generation
+const DEFAULT_BADGE_URL = "https://peakmark.vercel.app";
+
 /**
  * Generates a complete badge URL with all configuration parameters
  * @param badge - The badge configuration
- * @param baseUrl - Optional base URL (defaults to window.location.origin)
+ * @param baseUrl - Optional base URL (defaults to production URL for shareable badges)
  * @returns Complete badge URL with query parameters
  */
 export const generateBadgeUrl = (badge: Badge, baseUrl?: string): string => {
@@ -32,7 +35,8 @@ export const generateBadgeUrl = (badge: Badge, baseUrl?: string): string => {
     params.set("link", badge.link);
   }
 
-  const base = baseUrl ?? (typeof window !== "undefined" ? window.location.origin : "");
+  // Use provided baseUrl, or default to production URL for shareable badges
+  const base = baseUrl ?? DEFAULT_BADGE_URL;
   return `${base}/api/badge?${params.toString()}`;
 };
 
@@ -40,12 +44,14 @@ export const generateBadgeUrl = (badge: Badge, baseUrl?: string): string => {
  * Creates a shareable markdown badge link
  * @param badge - The badge configuration
  * @param baseUrl - Optional base URL
- * @returns Markdown format: [![label: message](url)](link)
+ * @returns Markdown format: [![alt text](url)](link)
  */
 export const generateMarkdownBadge = (badge: Badge, baseUrl?: string): string => {
   const badgeUrl = generateBadgeUrl(badge, baseUrl);
   const linkUrl = badge.link || badgeUrl;
-  return `[![${badge.label}: ${badge.message}](${badgeUrl})](${linkUrl})`;
+  const segments = getBadgeSegments(badge);
+  const altText = segments.map(s => s.text).join(' - ');
+  return `[![${altText}](${badgeUrl})](${linkUrl})`;
 };
 
 /**
@@ -56,5 +62,7 @@ export const generateMarkdownBadge = (badge: Badge, baseUrl?: string): string =>
  */
 export const generateHtmlBadge = (badge: Badge, baseUrl?: string): string => {
   const badgeUrl = generateBadgeUrl(badge, baseUrl);
-  return `<img src="${badgeUrl}" alt="${badge.label}: ${badge.message}" />`;
+  const segments = getBadgeSegments(badge);
+  const altText = segments.map(s => s.text).join(' - ');
+  return `<img src="${badgeUrl}" alt="${altText}" />`;
 };

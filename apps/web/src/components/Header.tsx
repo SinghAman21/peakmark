@@ -26,7 +26,7 @@ export const Header = () => {
         {/* Actions */}
         <div className="flex items-center gap-3">
           <Link href="/editor">
-            <Button variant="ghost" className="font-mono text-sm hidden sm:flex rounded-lg px-4 py-2 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+            <Button variant="ghost" className="font-mono cursor-pointer text-sm hidden sm:flex rounded-lg px-4 py-2 hover:bg-primary/10 hover:text-primary transition-all duration-300">
               <Sparkles className="w-4 h-4 mr-2" />
               Create Badge
             </Button>

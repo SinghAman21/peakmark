@@ -118,6 +118,12 @@ export const BadgeEditor = ({
       let content = "";
       const svgTsxComponent = generateBadgeTSXComponent(editedBadge);
 
+      // Generate alt text from segments
+      const segments = editedBadge.segments && editedBadge.segments.length > 0 
+        ? editedBadge.segments 
+        : [{ text: editedBadge.label, color: editedBadge.labelColor }, { text: editedBadge.message, color: editedBadge.messageColor }];
+      const altText = segments.map(s => s.text).join(' - ');
+
       switch (type) {
         case "svg":
           content = svgTsxComponent;
@@ -125,10 +131,10 @@ export const BadgeEditor = ({
         case "md":
           const badgeUrl = generateBadgeUrl(editedBadge);
           const linkUrl = editedBadge.link || badgeUrl;
-          content = `[![${editedBadge.label}: ${editedBadge.message}](${badgeUrl})](${linkUrl})`;
+          content = `[![${altText}](${badgeUrl})](${linkUrl})`;
           break;
         case "html":
-          content = `<img src="${generateBadgeUrl(editedBadge)}" alt="${editedBadge.label}: ${editedBadge.message}" />`;
+          content = `<img src="${generateBadgeUrl(editedBadge)}" alt="${altText}" />`;
           break;
       }
 

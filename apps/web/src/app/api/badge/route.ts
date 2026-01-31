@@ -17,13 +17,15 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
   const segmentsParam = params.get('segments');
   if (segmentsParam) {
     try {
-      segments = JSON.parse(decodeURIComponent(segmentsParam)) as BadgeSegment[];
+      // searchParams.get() already decodes the URL-encoded value
+      segments = JSON.parse(segmentsParam) as BadgeSegment[];
       // Apply paddingleft to all segments
       segments = segments.map(seg => ({
         ...seg,
         paddingLeft: seg.paddingLeft ?? paddingleft
       }));
     } catch (e) {
+      console.error('Failed to parse segments:', e);
       // Fallback to legacy params if segments parse fails
     }
   }
@@ -46,8 +48,10 @@ function parseBadgeFromParams(params: URLSearchParams): Badge {
   const advancedParam = params.get('advanced');
   if (advancedParam) {
     try {
-      advanced = JSON.parse(decodeURIComponent(advancedParam)) as BadgeAdvancedOptions;
-    } catch {
+      // searchParams.get() already decodes the URL-encoded value
+      advanced = JSON.parse(advancedParam) as BadgeAdvancedOptions;
+    } catch (e) {
+      console.error('Failed to parse advanced options:', e);
       // ignore malformed advanced param
     }
   }

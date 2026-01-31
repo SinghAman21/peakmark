@@ -46,6 +46,12 @@ export default function EditorPage() {
     let content = '';
     const svgTsxComponent = generateBadgeTSXComponent(badge);
     
+    // Generate alt text from segments
+    const segments = badge.segments && badge.segments.length > 0 
+      ? badge.segments 
+      : [{ text: badge.label, color: badge.labelColor }, { text: badge.message, color: badge.messageColor }];
+    const altText = segments.map(s => s.text).join(' - ');
+    
     switch (type) {
       case 'svg':
         content = svgTsxComponent;
@@ -53,10 +59,10 @@ export default function EditorPage() {
       case 'md':
         const badgeUrl = generateBadgeUrl(badge);
         const linkUrl = badge.link || badgeUrl;
-        content = `[![${badge.label}: ${badge.message}](${badgeUrl})](${linkUrl})`;
+        content = `[![${altText}](${badgeUrl})](${linkUrl})`;
         break;
       case 'html':
-        content = `<img src="${generateBadgeUrl(badge)}" alt="${badge.label}: ${badge.message}" />`;
+        content = `<img src="${generateBadgeUrl(badge)}" alt="${altText}" />`;
         break;
     }
     
