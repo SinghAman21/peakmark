@@ -60,7 +60,7 @@ const SegmentItem = ({
       className="bg-secondary/30 rounded-lg border border-border/50 overflow-hidden select-none"
     >
       {/* Segment Header */}
-      <div className="flex items-center gap-2 p-2 select-none">
+      <div className="flex items-center gap-1.5 sm:gap-2 p-2 select-none">
         {/* Drag handle */}
         <div
           onPointerDown={(e) => {
@@ -69,19 +69,19 @@ const SegmentItem = ({
           }}
           className="cursor-grab active:cursor-grabbing touch-none p-1 -m-1 hover:bg-muted/50 rounded"
         >
-          <GripVertical className="w-4 h-4 text-muted-foreground" />
+          <GripVertical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
         </div>
         
         {/* Color preview */}
         <div
-          className="w-6 h-6 rounded border border-border shrink-0 cursor-pointer"
+          className="w-5 h-5 sm:w-6 sm:h-6 rounded border border-border shrink-0 cursor-pointer"
           style={{ backgroundColor: segment.color }}
           onClick={() => onToggleExpand(segment.id!)}
         />
         
         {/* Text preview */}
         <span 
-          className="font-mono text-sm flex-1 truncate cursor-pointer"
+          className="font-mono text-xs sm:text-sm flex-1 truncate cursor-pointer"
           onClick={() => onToggleExpand(segment.id!)}
         >
           {segment.text || '(empty)'}
@@ -91,7 +91,7 @@ const SegmentItem = ({
         {hasIcon && (
           <button
             onClick={() => onToggleIcon(index)}
-            className={`px-2 py-0.5 text-xs font-mono rounded transition-colors flex items-center gap-1 ${
+            className={`px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-mono rounded transition-colors flex items-center gap-0.5 sm:gap-1 ${
               iconPosition === index
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -293,17 +293,17 @@ export const SegmentEditor = ({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <Label className="font-mono text-sm">Segments ({segments.length}/{maxSegments})</Label>
+        <Label className="font-mono text-xs sm:text-sm">Segments ({segments.length}/{maxSegments})</Label>
         <Button
           variant="ghost"
           size="sm"
           onClick={addSegment}
           disabled={segments.length >= maxSegments}
-          className="h-7 text-xs font-mono"
+          className="h-6 sm:h-7 text-[10px] sm:text-xs font-mono px-2 sm:px-3"
         >
-          <Plus className="w-3 h-3 mr-1" />
+          <Plus className="w-3 h-3 mr-0.5 sm:mr-1" />
           Add
         </Button>
       </div>

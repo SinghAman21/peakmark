@@ -127,25 +127,25 @@ export const CustomizePanel = ({
       className="relative group"
     >
       {/* Gradient glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent rounded-[2rem] blur-2xl group-hover:blur-3xl transition-all duration-500" />
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent rounded-xl sm:rounded-2xl md:rounded-[2rem] blur-2xl group-hover:blur-3xl transition-all duration-500" />
       
-      <div className="relative p-8 rounded-[2rem] border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="font-mono font-bold text-xl">Customize Badge</h2>
-          <span className="text-xs font-mono text-muted-foreground px-3 py-1.5 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">Editor</span>
+      <div className="relative p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl md:rounded-[2rem] border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500">
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <h2 className="font-mono font-bold text-base sm:text-lg md:text-xl">Customize Badge</h2>
+          <span className="text-[10px] sm:text-xs font-mono text-muted-foreground px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20">Editor</span>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-6 sm:space-y-8">
         {/* Icon Picker */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Label className="font-mono text-sm mb-3 block font-semibold">Icon</Label>
+          <Label className="font-mono text-xs sm:text-sm mb-2 sm:mb-3 block font-semibold">Icon</Label>
           <Button
             variant="outline"
-            className="w-full justify-between font-mono text-sm h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
+            className="w-full justify-between font-mono text-xs sm:text-sm h-10 sm:h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
             onClick={() => setIconPickerOpen(!iconPickerOpen)}
           >
             <span className="flex items-center gap-2">
@@ -178,7 +178,7 @@ export const CustomizePanel = ({
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="overflow-hidden"
               >
-                <div className="pt-4 px-4 pb-4 mt-3 rounded-xl bg-muted/30 border border-border/50">
+                <div className="pt-3 px-3 pb-3 sm:pt-4 sm:px-4 sm:pb-4 mt-2 sm:mt-3 rounded-xl bg-muted/30 border border-border/50">
                   <IconPicker
                     selectedIcon={badge.icon}
                     onSelect={(icon) => updateField("icon", icon)}
@@ -209,20 +209,20 @@ export const CustomizePanel = ({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="space-y-3"
+          className="space-y-2 sm:space-y-3"
         >
-          <Label className="font-mono text-sm font-semibold">Badge Style</Label>
+          <Label className="font-mono text-xs sm:text-sm font-semibold">Badge Style</Label>
           <Select value={badge.style} onValueChange={handleStyleChange}>
-            <SelectTrigger className="font-mono h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300">
+            <SelectTrigger className="font-mono h-10 sm:h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300 text-xs sm:text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="rounded-2xl border-border/50 bg-card/95 backdrop-blur-xl shadow-2xl">
-              <SelectItem value="flat" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Flat</SelectItem>
-              <SelectItem value="flat-square" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Flat Square</SelectItem>
-              <SelectItem value="plastic" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Plastic</SelectItem>
-              <SelectItem value="for-the-badge" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">For The Badge</SelectItem>
-              <SelectItem value="rounded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Rounded (Pill)</SelectItem>
-              <SelectItem value="folded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer">Folded Corner</SelectItem>
+              <SelectItem value="flat" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">Flat</SelectItem>
+              <SelectItem value="flat-square" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">Flat Square</SelectItem>
+              <SelectItem value="plastic" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">Plastic</SelectItem>
+              <SelectItem value="for-the-badge" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">For The Badge</SelectItem>
+              <SelectItem value="rounded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">Rounded (Pill)</SelectItem>
+              <SelectItem value="folded" className="rounded-xl font-mono focus:bg-primary/10 cursor-pointer text-xs sm:text-sm">Folded Corner</SelectItem>
             </SelectContent>
           </Select>
           <BadgeStylePresetPanel

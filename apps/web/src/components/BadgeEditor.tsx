@@ -188,22 +188,22 @@ export const BadgeEditor = ({
         }
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-8"
       >
-        <div className="w-full max-w-6xl max-h-[90vh] overflow-hidden">
+        <div className="w-full max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
           {/* Close button */}
-          <div className="flex justify-end mb-4">
+          <div className="flex justify-end mb-2 sm:mb-4">
             <Button
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="hover:bg-secondary"
+              className="hover:bg-secondary h-9 w-9 sm:h-10 sm:w-10"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </Button>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 max-h-[calc(90vh-60px)] overflow-y-auto items-start">
+          <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 max-h-[calc(95vh-48px)] sm:max-h-[calc(90vh-60px)] overflow-y-auto items-start">
             {/* Reusable Preview Panel */}
             <PreviewPanel
               badge={editedBadge}

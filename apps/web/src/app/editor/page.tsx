@@ -97,33 +97,33 @@ export default function EditorPage() {
         <div className="absolute bottom-20 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
       </div>
 
-      <main className="container mx-auto px-4 py-8 relative">
+      <main className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 relative">
         {/* Hero Header */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-10 md:mb-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 font-mono text-sm mb-6 border border-transparent hover:border-border/50"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-300 font-mono text-xs sm:text-sm mb-4 sm:mb-6 border border-transparent hover:border-border/50"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Back to Gallery
           </Link>
           
           <div className="text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-gradient-to-r from-primary/10 via-purple-500/10 to-pink-500/10 border border-primary/20 backdrop-blur-sm">
-              <span className="text-sm font-mono font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 mb-3 sm:mb-4 rounded-full bg-gradient-to-r from-primary/10 via-purple-500/10 to-pink-500/10 border border-primary/20 backdrop-blur-sm">
+              <span className="text-xs sm:text-sm font-mono font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">
                 Badge Editor
               </span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-mono font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 px-4">
               Create your perfect badge
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-base sm:text-lg px-4">
               Customize every detail and export in multiple formats
             </p>
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 items-start max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-7 md:gap-8 items-start max-w-7xl mx-auto">
           {/* Reusable Preview Panel */}
           <PreviewPanel
             badge={badge}

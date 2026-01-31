@@ -55,15 +55,15 @@ export const IconPicker = ({ selectedIcon, onSelect }: IconPickerProps) => {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search icons..."
-          className="pl-9 font-mono text-sm bg-secondary/50 rounded-2xl border-border/50 hover:border-primary/30 focus:border-primary/50 transition-all duration-300"
+          className="pl-8 sm:pl-9 font-mono text-xs sm:text-sm bg-secondary/50 rounded-xl sm:rounded-2xl border-border/50 hover:border-primary/30 focus:border-primary/50 transition-all duration-300 h-9 sm:h-10"
         />
       </div>
 
@@ -74,7 +74,7 @@ export const IconPicker = ({ selectedIcon, onSelect }: IconPickerProps) => {
             key={cat.id}
             size="sm"
             variant={activeCategory === cat.id ? 'default' : 'ghost'}
-            className="h-7 px-2.5 text-xs font-mono rounded-xl"
+            className="h-6 sm:h-7 px-2 sm:px-2.5 text-[10px] sm:text-xs font-mono rounded-lg sm:rounded-xl"
             onClick={() => setActiveCategory(cat.id)}
           >
             {cat.label}
@@ -87,18 +87,18 @@ export const IconPicker = ({ selectedIcon, onSelect }: IconPickerProps) => {
         <Button
           size="sm"
           variant="outline"
-          className="w-full h-8 text-xs font-mono"
+          className="w-full h-7 sm:h-8 text-[10px] sm:text-xs font-mono"
           onClick={() => onSelect(undefined)}
         >
-          <X className="w-3 h-3 mr-1.5" />
+          <X className="w-3 h-3 mr-1 sm:mr-1.5" />
           Clear Icon
         </Button>
       )}
 
       {/* Icon Grid */}
-      <ScrollArea className="h-[200px]">
+      <ScrollArea className="h-[180px] sm:h-[200px]">
         <motion.div 
-          className="grid grid-cols-6 gap-1.5 pr-3"
+          className="grid grid-cols-5 sm:grid-cols-6 gap-1 sm:gap-1.5 pr-2 sm:pr-3"
           layout
         >
           <AnimatePresence mode="popLayout">

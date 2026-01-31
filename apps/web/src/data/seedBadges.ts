@@ -323,7 +323,7 @@ export const seedBadges: Badge[] = [
     icon: 'zap',
     category: 'custom',
     iconPosition: 0,
-    link: 'https://peakmark.io',
+    link: 'https://peakmark.vercel.app',
     segments: [
       { text: 'made by', color: '#0f172a', paddingLeft: 8 },
       { text: 'Peakmark', color: '#22d3ee', paddingLeft: 15 },

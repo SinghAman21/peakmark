@@ -101,7 +101,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
       <motion.div
-        className="glass-panel p-5 rounded-xl relative overflow-hidden"
+        className="glass-panel p-4 sm:p-5 rounded-xl relative overflow-hidden"
         animate={{
           boxShadow: isHovered
             ? `0 0 30px ${getGlowColor()}, 0 0 60px ${getGlowColor()}`
@@ -119,7 +119,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
 
         {/* Badge Preview */}
         <motion.div
-          className="flex items-center justify-center py-6 relative z-10"
+          className="flex items-center justify-center py-4 sm:py-6 relative z-10"
           animate={{ y: isHovered ? -8 : 0 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
@@ -130,7 +130,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
         <AnimatePresence>
           {isHovered && (
             <motion.button
-              className="absolute cursor-pointer top-3 right-3 w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg z-20"
+              className="absolute cursor-pointer top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg z-20"
               variants={remixButtonVariants}
               initial="initial"
               animate="animate"
@@ -139,7 +139,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
               whileTap="tap"
               onClick={handleRemix}
             >
-              <Pencil className="w-4 h-4" />
+              <Pencil className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </motion.button>
           )}
         </AnimatePresence>
@@ -148,7 +148,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
         <AnimatePresence>
           {isHovered && (
             <motion.div
-              className="absolute bottom-0 left-0 right-0 flex justify-center gap-2 pb-4 z-20"
+              className="absolute bottom-0 left-0 right-0 flex justify-center gap-1.5 sm:gap-2 pb-3 sm:pb-4 z-20"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -161,7 +161,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
                 <motion.button
                   key={item.type}
                   className={`
-                    flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-medium
+                    flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-mono font-medium
                     backdrop-blur-md border transition-colors cursor-pointer
                     ${copiedType === item.type 
                       ? 'bg-primary/20 border-primary/50 text-primary' 
@@ -188,7 +188,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
                       <item.icon className="w-3 h-3" />
                     )}
                   </motion.span>
-                  {item.label}
+                  <span className="hidden sm:inline">{item.label}</span>
                 </motion.button>
               ))}
             </motion.div>

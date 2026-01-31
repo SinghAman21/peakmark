@@ -73,23 +73,23 @@ export default function Home() {
         <HeroSection />
         
         {/* Gallery Section */}
-        <section className="py-24 px-4 relative">
+        <section className="py-16 sm:py-20 md:py-24 px-4 relative">
           <div className="container mx-auto">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={containerVariants}
-              className="text-center mb-16"
+              className="text-center mb-12 sm:mb-14 md:mb-16"
             >
               <motion.div variants={itemVariants}>
-                <span className="inline-block px-4 py-1.5 mb-6 text-xs font-mono font-semibold rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20 text-primary">
+                <span className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 text-[10px] sm:text-xs font-mono font-semibold rounded-full bg-gradient-to-r from-primary/10 to-purple-500/10 border border-primary/20 text-primary">
                   BADGE COLLECTION
                 </span>
               </motion.div>
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-5xl font-mono font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-bold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 px-2"
               >
                 Ready-to-use{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-pink-500">
@@ -98,7 +98,7 @@ export default function Home() {
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-muted-foreground max-w-2xl mx-auto text-lg"
+                className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg px-4"
               >
                 Hover to copy or remix. Each badge is fully customizable with our intuitive editor.
               </motion.p>
@@ -116,7 +116,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-24 px-4 relative overflow-hidden">
+        <section className="py-16 sm:py-20 md:py-24 px-4 relative overflow-hidden">
           {/* Decorative curved background */}
           <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
@@ -127,16 +127,16 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               variants={containerVariants}
-              className="text-center mb-16"
+              className="text-center mb-12 sm:mb-14 md:mb-16"
             >
               <motion.div variants={itemVariants}>
-                <span className="inline-block px-4 py-1.5 mb-6 text-xs font-mono font-semibold rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400">
+                <span className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 text-[10px] sm:text-xs font-mono font-semibold rounded-full bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400">
                   POWERFUL FEATURES
                 </span>
               </motion.div>
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-5xl font-mono font-bold mb-4"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-bold mb-3 sm:mb-4 px-2"
               >
                 Why developers{' '}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500">
@@ -150,7 +150,7 @@ export default function Home() {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               variants={containerVariants}
-              className="grid md:grid-cols-3 gap-8"
+              className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8"
             >
               {[
                 {
@@ -178,15 +178,15 @@ export default function Home() {
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   className="group relative"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                  <div className="relative h-full p-8 rounded-3xl border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5">
-                    <div className={`inline-flex p-3 rounded-2xl bg-gradient-to-br ${feature.gradient} mb-6 shadow-lg`}>
-                      <feature.icon className="w-6 h-6 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl sm:rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                  <div className="relative h-full p-6 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border border-border/50 bg-card/50 backdrop-blur-sm hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5">
+                    <div className={`inline-flex p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.gradient} mb-4 sm:mb-6 shadow-lg`}>
+                      <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <h3 className="font-mono font-bold text-xl mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="font-mono font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-primary transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                       {feature.description}
                     </p>
                   </div>
@@ -197,14 +197,14 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 px-4 relative">
+        <section className="py-16 sm:py-20 md:py-24 px-4 relative">
           <div className="container mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative overflow-hidden rounded-[2.5rem] border border-border/50 bg-gradient-to-br from-primary/10 via-purple-500/5 to-pink-500/10 p-12 md:p-16"
+              className="relative overflow-hidden rounded-2xl sm:rounded-3xl md:rounded-[2.5rem] border border-border/50 bg-gradient-to-br from-primary/10 via-purple-500/5 to-pink-500/10 p-8 sm:p-10 md:p-12 lg:p-16"
             >
               <div className="absolute inset-0 bg-grid-pattern opacity-5" />
               <div className="relative text-center max-w-3xl mx-auto">
@@ -214,20 +214,20 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
                 >
-                  <Zap className="w-12 h-12 mx-auto mb-6 text-primary" />
-                  <h2 className="text-3xl md:text-5xl font-mono font-bold mb-6">
+                  <Zap className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4 sm:mb-6 text-primary" />
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-mono font-bold mb-4 sm:mb-6 px-2">
                     Start creating today
                   </h2>
-                  <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
                     Join thousands of developers who are already creating beautiful badges for their projects.
                   </p>
                   <motion.a
                     href="/editor"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-primary-foreground font-mono font-semibold text-lg shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+                    className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-primary text-primary-foreground font-mono font-semibold text-base sm:text-lg shadow-xl shadow-primary/20 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
                   >
-                    <Sparkles className="w-5 h-5" />
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
                     Create Your First Badge
                   </motion.a>
                 </motion.div>
@@ -238,15 +238,15 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="relative py-12 px-4 mt-24">
+      <footer className="relative py-10 sm:py-12 px-4 mt-16 sm:mt-20 md:mt-24">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="container mx-auto">
-          <div className="flex flex-col items-center justify-center gap-6">
+          <div className="flex flex-col items-center justify-center gap-4 sm:gap-6">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="flex items-center gap-6"
+              className="flex items-center gap-4 sm:gap-6"
             >
               <motion.a
                 href="https://github.com/SinghAman21/peakmark"
@@ -254,9 +254,9 @@ export default function Home() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300"
+                className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300"
               >
-                <Github className="w-5 h-5" />
+                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.a>
               <motion.a
                 href="https://x.com/SinghAman21_"
@@ -264,7 +264,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300 font-mono   "
+                className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300 font-mono text-sm sm:text-base"
               >
                 𝕏
               </motion.a>
@@ -274,7 +274,7 @@ export default function Home() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-sm text-muted-foreground font-mono text-center"
+              className="text-xs sm:text-sm text-muted-foreground font-mono text-center px-4"
             >
               &copy; {year} Peakmark. Built for Developers. By a{' '}
               <a

@@ -50,7 +50,7 @@ export const BadgeGallery = ({ onRemix }: BadgeGalleryProps) => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6"
       >
         {seedBadges.map((badge, index) => (
           <motion.div 

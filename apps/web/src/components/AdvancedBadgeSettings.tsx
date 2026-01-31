@@ -56,14 +56,14 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
 
   return (
     <div>
-      <Label className="font-mono text-sm mb-3 block font-semibold">Advanced Settings</Label>
+      <Label className="font-mono text-xs sm:text-sm mb-2 sm:mb-3 block font-semibold">Advanced Settings</Label>
       <Button
         variant="outline"
-        className="w-full justify-between font-mono text-sm h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
+        className="w-full justify-between font-mono text-xs sm:text-sm h-10 sm:h-12 rounded-xl bg-secondary/50 hover:bg-secondary border-border/50 hover:border-primary/30 transition-all duration-300"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="flex items-center gap-2">
-          <Settings2 className="w-4 h-4" />
+        <span className="flex items-center gap-1.5 sm:gap-2">
+          <Settings2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           {isOpen ? 'Hide' : 'Show'} Advanced Options
         </span>
         <motion.div
@@ -82,12 +82,12 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="pt-4 px-5 pb-5 mt-3 space-y-6 rounded-2xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50">
+            <div className="pt-3 px-3 pb-3 sm:pt-4 sm:px-5 sm:pb-5 mt-2 sm:mt-3 space-y-4 sm:space-y-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-muted/50 to-muted/30 border border-border/50">
         {/* Size Presets */}
-        <div className="space-y-2">
-          <Label className="font-mono text-sm flex items-center justify-between">
+        <div className="space-y-1.5 sm:space-y-2">
+          <Label className="font-mono text-xs sm:text-sm flex items-center justify-between">
             Size
-            <span className="text-xs text-muted-foreground font-normal">
+            <span className="text-[10px] sm:text-xs text-muted-foreground font-normal">
               {BADGE_SIZE_PRESETS[currentSize].label}
             </span>
           </Label>
@@ -99,13 +99,13 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
               if (!value) return;
               handleSizePreset(value[0] as unknown as BadgeSize);
             }}
-            className="justify-start gap-2"
+            className="justify-start gap-1 sm:gap-2"
           >
             {(Object.keys(BADGE_SIZE_PRESETS) as BadgeSize[]).map((size) => (
               <ToggleGroupItem
                 key={size}
                 value={size}
-                className="font-mono text-xs uppercase px-4 rounded-xl data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover:bg-primary/10 transition-all duration-300"
+                className="font-mono text-[10px] sm:text-xs uppercase px-3 sm:px-4 rounded-lg sm:rounded-xl data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover:bg-primary/10 transition-all duration-300"
               >
                 {size}
               </ToggleGroupItem>
@@ -114,10 +114,10 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
         </div>
 
         {/* Opacity */}
-        <div className="space-y-2">
-          <Label className="font-mono text-sm flex items-center justify-between">
+        <div className="space-y-1.5 sm:space-y-2">
+          <Label className="font-mono text-xs sm:text-sm flex items-center justify-between">
             Opacity
-            <span className="text-xs text-muted-foreground font-normal">
+            <span className="text-[10px] sm:text-xs text-muted-foreground font-normal">
               {Math.round((advanced.opacity ?? 1) * 100)}%
             </span>
           </Label>
@@ -298,9 +298,9 @@ export const AdvancedBadgeSettings = ({ advanced, onChange }: AdvancedBadgeSetti
             variant="ghost"
             size="sm"
             onClick={resetToDefaults}
-            className="w-full font-mono text-xs h-10 rounded-xl text-muted-foreground hover:text-foreground hover:bg-destructive/10 border border-transparent hover:border-destructive/30 transition-all duration-300"
+            className="w-full font-mono text-[10px] sm:text-xs h-9 sm:h-10 rounded-xl text-muted-foreground hover:text-foreground hover:bg-destructive/10 border border-transparent hover:border-destructive/30 transition-all duration-300"
           >
-            <RotateCcw className="w-4 h-4 mr-2" />
+            <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
             Reset to Defaults
           </Button>
         </motion.div>
