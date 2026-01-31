@@ -264,7 +264,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300 font-mono font-bold text-lg"
+                className="p-3 rounded-2xl bg-muted/50 hover:bg-muted border border-border/50 hover:border-primary/30 transition-all duration-300 font-mono   "
               >
                 𝕏
               </motion.a>
@@ -276,14 +276,14 @@ export default function Home() {
               transition={{ delay: 0.2 }}
               className="text-sm text-muted-foreground font-mono text-center"
             >
-              &copy; {year} Peakmark. Built for Developers. By{' '}
+              &copy; {year} Peakmark. Built for Developers. By a{' '}
               <a
                 href="https://useraman.me"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline font-semibold"
               >
-                Dev
+                Developer
               </a>
             </motion.p>
           </div>

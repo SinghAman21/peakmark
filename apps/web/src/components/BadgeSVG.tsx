@@ -390,7 +390,7 @@ export const generateBadgeSVGString = (badge: Badge): string => {
 
   const radius = getRadius();
   const foldSize = badge.style === 'folded' ? 6 : 0;
-  const link = badge.link || 'https://useraman.me';
+  const link = badge.link || 'https://peakmark.vercel.app';
 
   // Advanced options with defaults (match component)
   const opacity = badge.advanced?.opacity ?? 1;
@@ -721,7 +721,7 @@ export const generateBadgeTSXComponent = (badge: Badge): string => {
 
   const radius = getRadius();
   const foldSize = badge.style === 'folded' ? 6 : 0;
-  const link = badge.link || 'https://useraman.me';
+  const link = badge.link || 'https://peakmark.vercel.app';
 
   // Advanced options with defaults
   const opacity = badge.advanced?.opacity ?? 1;

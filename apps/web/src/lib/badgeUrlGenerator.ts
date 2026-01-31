@@ -33,7 +33,7 @@ export const generateBadgeUrl = (badge: Badge, baseUrl?: string): string => {
   }
 
   const base = baseUrl ?? (typeof window !== "undefined" ? window.location.origin : "");
-  return `${base}/badge?${params.toString()}`;
+  return `${base}/api/badge?${params.toString()}`;
 };
 
 /**

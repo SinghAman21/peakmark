@@ -130,7 +130,7 @@ export const BadgeCard = ({ badge, onRemix }: BadgeCardProps) => {
         <AnimatePresence>
           {isHovered && (
             <motion.button
-              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg z-20"
+              className="absolute cursor-pointer top-3 right-3 w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg z-20"
               variants={remixButtonVariants}
               initial="initial"
               animate="animate"

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { motion, px } from 'framer-motion';
 import { ArrowRight, Sparkles, Zap, Copy, Code2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -79,7 +79,7 @@ export const HeroSection = () => {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button size="lg" className="h-14 px-8 rounded-2xl font-mono font-semibold text-base shadow-xl shadow-primary/20 bg-gradient-to-r from-primary to-primary/90 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300 group">
+                <Button size="lg" className="h-14 cursor-pointer px-8 rounded-2xl font-mono font-semibold text-base shadow-xl shadow-primary/20 bg-gradient-to-r from-primary to-primary/90 hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300 group">
                   <Sparkles className="w-5 h-5 mr-2" />
                   Create a Badge
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -93,7 +93,10 @@ export const HeroSection = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="h-14 px-8 rounded-2xl font-mono font-semibold text-base border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                className="h-14 cursor-pointer px-8 rounded-2xl font-mono font-semibold text-base border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300"
+                onClick={() => {
+                  window.scrollBy({ top: 913, behavior: 'smooth' });
+                }}
               >
                 <Code2 className="w-5 h-5 mr-2" />
                 Browse Gallery

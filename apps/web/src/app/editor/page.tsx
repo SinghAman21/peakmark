@@ -19,7 +19,7 @@ const defaultBadge: Badge = {
   style: 'flat',
   category: 'custom',
   iconPosition: 0,
-  link: 'https://useraman.me',
+  link: 'https://peakmark.vercel.app',
   segments: [
     { text: 'your label', color: '#555555' },
     { text: 'your message', color: '#22d3ee' },
