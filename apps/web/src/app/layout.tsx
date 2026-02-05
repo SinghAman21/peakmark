@@ -26,8 +26,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://peakmark.vercel.app/"),
   title: {
-    template: "%s | Aman Singh",
-    default: "Aman Singh",
+    template: "%s | Peakmark",
+    default: "Peakmark - Customizable Badges for Developers",
   },
     description: "Create, customize, and share badges for developers to showcase skills and achievements. Easily remix badges for your projects and enhance your portfolio.",
   keywords: [

@@ -46,7 +46,7 @@ export const seedBadges: Badge[] = [
     link: '',
     segments: [
       { text: 'coverage', color: '#555555' },
-      { text: '98%', color: '#22d3ee' },
+      { text: '98%', color: '#22d3ee', paddingLeft: 12 },
     ],
     advanced: {
       size: 'md',
@@ -185,7 +185,7 @@ export const seedBadges: Badge[] = [
     iconPosition: 0,
     link: 'https://www.typescriptlang.org',
     segments: [
-      { text: 'TypeScript', color: '#3178c6' },
+      { text: 'TypeScript', color: '#3178c6', paddingLeft: 12 },
       { text: '100%', color: '#0f172a', paddingLeft: 12 },
     ],
     advanced: {
@@ -465,8 +465,8 @@ export const seedBadges: Badge[] = [
     iconPosition: 0,
     link: 'https://vercel.com',
     segments: [
-      { text: 'deploy', color: '#000000' },
-      { text: 'vercel', color: '#ffffff' },
+      { text: 'Deploy', color: '#000000' },
+      { text: 'Vercel', color: '#ffffff' },
     ],
     advanced: {
       size: 'md',
@@ -522,7 +522,7 @@ export const seedBadges: Badge[] = [
     link: '',
     segments: [
       { text: 'PRs', color: '#555555' },
-      { text: 'welcome', color: '#22c55e' },
+      { text: 'welcome', color: '#22c55e', paddingLeft: 12 },
     ],
     advanced: {
       size: 'md',
@@ -578,7 +578,7 @@ export const seedBadges: Badge[] = [
     link: '',
     segments: [
       { text: 'uptime', color: '#555555' },
-      { text: '99.9%', color: '#10b981' },
+      { text: '99.9%', color: '#10b981', paddingLeft: 12 },
     ],
     advanced: {
       size: 'md',
@@ -605,7 +605,7 @@ export const seedBadges: Badge[] = [
     link: '',
     segments: [
       { text: 'made with', color: '#555555', paddingLeft: 20 },
-      { text: '❤️', color: '#c27474' },
+      { text: '❤️', color: '#f2d8d8' },
     ],
     advanced: {
       size: 'lg',
